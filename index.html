@@ -9,75 +9,89 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       defer
     ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              'fade-in': 'fadeIn 1s ease-in-out',
+              'slide-up': 'slideUp 0.8s ease-out',
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 6s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                'from': { opacity: '0' },
+                'to': { opacity: '1' },
+              },
+              slideUp: {
+                'from': { transform: 'translateY(50px)', opacity: '0' },
+                'to': { transform: 'translateY(0)', opacity: '1' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
   </head>
   <body class="bg-gray-100 font-sans">
     <!-- Navbar -->
-    <header class="bg-white shadow-md relative z-30">
+    <header class="bg-white shadow-md sticky top-0 z-50">
       <nav class="container mx-auto flex items-center justify-between p-4">
-        <!-- Logo -->
-        <img
-          src="assets/logo mentor hub.png"
-          alt="Mentor Hub Logo"
-          class="w-40"
-        />
-
+        <!-- Logo with animation -->
+        <div class="animate-fade-in">
+          <img src="assets/logo mentor hub.png" alt="Mentor Hub Logo" class="w-40 hover:scale-105 transition-transform duration-300">
+        </div>
+  
         <!-- Desktop Navigation Links -->
         <ul class="hidden md:flex md:items-center md:gap-4">
-          <li>
-            <a href="#" class="px-4 py-2 rounded-lg font-bold hover:text-blue-600 transition-colors"
-              >Become a Mentor</a
-            >
+          <li class="animate-fade-in" style="animation-delay: 100ms">
+            <a href="#" class="px-4 py-2 rounded-lg font-bold hover:text-blue-600 transition-colors">Become a Mentor</a>
           </li>
-          <li>
-            <a href="#" class="px-4 py-2 rounded-lg font-bold hover:text-blue-600 transition-colors"
-              >Home</a
-            >
+          <li class="animate-fade-in" style="animation-delay: 200ms">
+            <a href="#" class="px-4 py-2 rounded-lg font-bold hover:text-blue-600 transition-colors">Home</a>
           </li>
-          <li>
-            <a href="#" class="px-4 py-2 rounded-lg font-bold hover:text-blue-600 transition-colors"
-              >About</a
-            >
+          <li class="animate-fade-in" style="animation-delay: 300ms">
+            <a href="#" class="px-4 py-2 rounded-lg font-bold hover:text-blue-600 transition-colors">About</a>
           </li>
-          <li>
-            <button class="bg-black text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-800 transition-colors">
+          <li class="animate-fade-in" style="animation-delay: 400ms">
+            <button class="bg-black text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-800 transition-colors hover:scale-105">
               Login/Signup
             </button>
           </li>
         </ul>
-
+  
         <!-- Mobile Menu Button -->
-        <button id="menu-toggle" class="md:hidden text-xl focus:outline-none">
+        <button id="menu-toggle" class="md:hidden text-xl focus:outline-none animate-fade-in">
           <i class="fas fa-bars"></i>
         </button>
-
+  
         <!-- Mobile Menu Overlay -->
         <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-80 z-40 opacity-0 invisible transition-all duration-300 ease-in-out"></div>
-
+  
         <!-- Mobile Menu Content -->
         <div id="mobile-menu" class="fixed top-0 -right-full w-4/5 max-w-xs h-screen bg-white z-50 shadow-xl transition-all duration-300 ease-in-out">
           <div class="flex justify-end p-4">
-            <button id="menu-close" class="text-2xl focus:outline-none">
+            <button id="menu-close" class="text-2xl focus:outline-none hover:rotate-90 transition-transform duration-300">
               <i class="fas fa-times"></i>
             </button>
           </div>
           <ul class="flex flex-col items-center space-y-6 p-8">
-            <li>
-              <a href="#" class="text-xl font-semibold hover:text-blue-600 transition-colors"
-                >Become a Mentor</a
-              >
+            <li class="animate-slide-up" style="animation-delay: 100ms">
+              <a href="#" class="text-xl font-semibold hover:text-blue-600 transition-colors">Become a Mentor</a>
             </li>
-            <li>
-              <a href="#" class="text-xl font-semibold hover:text-blue-600 transition-colors"
-                >Home</a
-              >
+            <li class="animate-slide-up" style="animation-delay: 150ms">
+              <a href="#" class="text-xl font-semibold hover:text-blue-600 transition-colors">Home</a>
             </li>
-            <li>
-              <a href="#" class="text-xl font-semibold hover:text-blue-600 transition-colors"
-                >About</a
-              >
+            <li class="animate-slide-up" style="animation-delay: 200ms">
+              <a href="#" class="text-xl font-semibold hover:text-blue-600 transition-colors">About</a>
             </li>
-            <li>
-              <button class="bg-black text-white px-6 py-3 rounded-lg font-bold text-xl hover:bg-gray-800 transition-colors">
+            <li class="animate-slide-up" style="animation-delay: 250ms">
+              <button class="bg-black text-white px-6 py-3 rounded-lg font-bold text-xl hover:bg-gray-800 transition-colors hover:scale-105">
                 Login/Signup
               </button>
             </li>
@@ -86,242 +100,330 @@
       </nav>
     </header>
 <main>
-    <!-- Carousel -->
-    <div class="relative w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-lg" style="height: 30vh; min-height: 200px; max-height: 400px;">
-      <div id="slides" class="flex transition-transform duration-700 h-full">
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
-          class="w-full flex-shrink-0 object-cover h-full"
-        />
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp"
-          class="w-full flex-shrink-0 object-cover h-full"
-        />
+    <!-- Hero Carousel -->
+    <div class="relative w-full max-w-7xl mx-auto overflow-hidden rounded-xl shadow-2xl mb-16 animate-fade-in"
+         style="height: 30vh; min-height: 250px; max-height: 500px;">
+      <div id="slides" class="flex h-full transition-transform duration-700 ease-in-out">
+        <div class="w-full flex-shrink-0 relative h-full">
+          <img src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
+               class="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-500"/>
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+            <h2 class="text-3xl md:text-5xl font-bold text-white text-center px-4 animate-slide-up">
+              Connect with Top Mentors
+            </h2>
+          </div>
+        </div>
+        <div class="w-full flex-shrink-0 relative h-full">
+          <img src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp"
+               class="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-500"/>
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+            <h2 class="text-3xl md:text-5xl font-bold text-white text-center px-4 animate-slide-up">
+              Accelerate Your Learning
+            </h2>
+          </div>
+        </div>
       </div>
-      <button
-        id="prevBtn"
-        class="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white text-black px-3 py-2 rounded-full shadow-md hover:bg-gray-200"
-      >
+      <button id="prevBtn"
+              class="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white/80 text-black px-4 py-3 rounded-full shadow-lg hover:bg-white hover:scale-110 transition-all duration-300">
         ❮
       </button>
-      <button
-        id="nextBtn"
-        class="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white text-black px-3 py-2 rounded-full shadow-md hover:bg-gray-200"
-      >
+      <button id="nextBtn"
+              class="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white/80 text-black px-4 py-3 rounded-full shadow-lg hover:bg-white hover:scale-110 transition-all duration-300">
         ❯
       </button>
+      <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-white/80 cursor-pointer slide-indicator"></div>
+        <div class="w-3 h-3 rounded-full bg-white/30 cursor-pointer slide-indicator"></div>
+      </div>
     </div>
 
-    <!-- Sections -->
+    <!-- CTA Buttons -->
     <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-40 p-10 text-center">
-      <button
-        class="relative group border-none bg-transparent p-0 outline-none cursor-pointer font-mono font-light uppercase text-base"
-      >
-        <span
-          class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"
-        ></span>
-    
-        <span
-          class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"
-        ></span>
-    
-        <div
-          class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#f27121] via-[#e94057] to-[#8a2387] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110"
-        >
+      <button class="relative group border-none bg-transparent p-0 outline-none cursor-pointer animate-fade-in" style="animation-delay: 200ms">
+        <span class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
+        <span class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"></span>
+        <div class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#f27121] via-[#e94057] to-[#8a2387] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110">
           <span class="select-none">For Experts</span>
-    
-          <svg
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1"
-          >
-            <path
-              clip-rule="evenodd"
-              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-              fill-rule="evenodd"
-            ></path>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1">
+            <path clip-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" fill-rule="evenodd"></path>
           </svg>
         </div>
       </button>
-    
-      <button
-        class="relative group border-none bg-transparent p-0 outline-none cursor-pointer font-mono font-light uppercase text-base"
-      >
-        <span
-          class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"
-        ></span>
-    
-        <span
-          class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"
-        ></span>
-    
-        <div
-          class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#f27121] via-[#e94057] to-[#8a2387] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110"
-        >
+      
+      <button class="relative group border-none bg-transparent p-0 outline-none cursor-pointer animate-fade-in" style="animation-delay: 300ms">
+        <span class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
+        <span class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"></span>
+        <div class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#f27121] via-[#e94057] to-[#8a2387] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110">
           <span class="select-none">For Students</span>
-    
-          <svg
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1"
-          >
-            <path
-              clip-rule="evenodd"
-              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-              fill-rule="evenodd"
-            ></path>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1">
+            <path clip-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" fill-rule="evenodd"></path>
           </svg>
         </div>
       </button>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5">
-      <button
-        type="submit"
-        class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
-      >
+    <!-- Specialization Buttons -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 max-w-6xl mx-auto">
+      <button type="submit" class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group animate-fade-in" style="animation-delay: 100ms">
         Frontend
-        <svg
-          class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45"
-          viewBox="0 0 16 19"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-            class="fill-gray-800 group-hover:fill-gray-800"
-          ></path>
+        <svg class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z" class="fill-gray-800 group-hover:fill-gray-800"></path>
         </svg>
       </button>
 
-      <button
-        type="submit"
-        class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
-      >
-        backend
-        <svg
-          class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45"
-          viewBox="0 0 16 19"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-            class="fill-gray-800 group-hover:fill-gray-800"
-          ></path>
+      <button type="submit" class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group animate-fade-in" style="animation-delay: 200ms">
+        Backend
+        <svg class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z" class="fill-gray-800 group-hover:fill-gray-800"></path>
         </svg>
       </button>
 
-      <button
-        type="submit"
-        class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
-      >
+      <button type="submit" class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group animate-fade-in" style="animation-delay: 300ms">
         Full Stack
-        <svg
-          class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45"
-          viewBox="0 0 16 19"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-            class="fill-gray-800 group-hover:fill-gray-800"
-          ></path>
+        <svg class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z" class="fill-gray-800 group-hover:fill-gray-800"></path>
         </svg>
       </button>
-      <button
-        type="submit"
-        class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
-      >
+
+      <button type="submit" class="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group animate-fade-in" style="animation-delay: 400ms">
         UI/UX
-        <svg
-          class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45"
-          viewBox="0 0 16 19"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-            class="fill-gray-800 group-hover:fill-gray-800"
-          ></path>
+        <svg class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z" class="fill-gray-800 group-hover:fill-gray-800"></path>
         </svg>
       </button>
     </div>
 
-    <!-- Profile Cards Grid -->
-    <div class="container mx-auto px-4 sm:px-6 md:px-10 py-8 sm:py-12 md:py-16">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+
+     <!-- Profile Cards Grid -->
+     <div class="container mx-auto px-4 sm:px-6 md:px-10 py-8 sm:py-12 md:py-16">
+      <h2 class="text-4xl font-bold text-center mb-16 animate-fade-in">Featured Mentors</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Animated Profile Cards -->
         <!-- Card 1 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 100ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 2 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 200ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 3 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 300ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 4 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 500ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 5 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 700ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 6 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 900ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 7 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 1100ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 8 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 1300ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
         
         <!-- Card 9 -->
-        <div class="bg-gray-950 rounded-lg p-4 sm:p-6 flex flex-col items-center h-auto min-h-[200px] sm:h-[250px] md:h-[400px]">
-          <img src="assets/portrait-6040876.jpg" class="rounded-full h-16 sm:h-20 md:h-[120px] w-16 sm:w-20 md:w-[120px] mb-3 sm:mb-4" alt="profile">
-          <span class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-2">Anonymous</span>
-          <p class="text-white text-center text-sm sm:text-base md:text-lg px-2 sm:px-0 line-clamp-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!</p>
+       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group animate-slide-up" style="animation-delay: 1500ms">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <div class="p-6 text-center">
+            <div class="w-24 h-24 mx-auto -mt-16 rounded-full border-4 border-white overflow-hidden shadow-lg relative animate-float">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                   class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Sarah Johnson</h3>
+            <p class="text-blue-600 font-medium">Frontend Developer</p>
+            <p class="text-gray-600 mt-3">10+ years experience building responsive web applications</p>
+            <button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              View Profile
+            </button>
+          </div>
         </div>
       </div>
   </div>
   
-  <!-- How it works section -->
-  <div class="container mx-auto px-4 pb-16">
-    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">How it works?</h1>
+ <!-- How it works section -->
+ <div class="container mx-auto px-4 pb-16">
+  <h1 class="text-4xl font-bold text-center mb-16 animate-fade-in">How It Works?</h1>
+  
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Step 1 -->
+    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-up" style="animation-delay: 100ms">
+      <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+        <span class="text-2xl font-bold text-blue-600">1</span>
+      </div>
+      <h3 class="text-2xl font-semibold text-center mb-4">Create Profile</h3>
+      <p class="text-gray-600 text-center">Sign up and create your detailed mentor or mentee profile</p>
+    </div>
     
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-      <div class="bg-black w-full h-64 md:h-80 lg:h-96 rounded-lg"></div>
-      <div class="bg-black w-full h-64 md:h-80 lg:h-96 rounded-lg"></div>
-      <div class="bg-black w-full h-64 md:h-80 lg:h-96 rounded-lg"></div>
+    <!-- Step 2 -->
+    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-up" style="animation-delay: 200ms">
+      <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+        <span class="text-2xl font-bold text-blue-600">2</span>
+      </div>
+      <h3 class="text-2xl font-semibold text-center mb-4">Find Match</h3>
+      <p class="text-gray-600 text-center">Our algorithm matches you with ideal partners</p>
+    </div>
+    
+    <!-- Step 3 -->
+    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-up" style="animation-delay: 300ms">
+      <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+        <span class="text-2xl font-bold text-blue-600">3</span>
+      </div>
+      <h3 class="text-2xl font-semibold text-center mb-4">Start Learning</h3>
+      <p class="text-gray-600 text-center">Begin your mentorship journey with scheduled sessions</p>
     </div>
   </div>
+</div>
 
   <div class="px-4 py-8 sm:px-6 lg:px-8">
     <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">Why Settle for Less? Go Premium Today!</h1>
@@ -607,45 +709,95 @@
       </div>
     </div>
   </div>
-<div class="text-center bg-white my-10 p-5">
-    <h1 class="text-4xl font-semibold">Frequently Asked Questions</h1>
+ <!-- FAQ Item 1 with animation -->
+ <div class="mb-6 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up" style="animation-delay: 100ms">
+  <button class="w-full p-6 text-left bg-gray-50 hover:bg-gray-100 transition-colors duration-300 flex justify-between items-center">
+    <h2 class="text-xl font-semibold">How can I track my mentorship progress?</h2>
+    <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  <div class="px-6 pb-6 pt-2 bg-white">
+    <p class="text-gray-600">You can track your progress through our dashboard which shows completed sessions, skills acquired, and mentor feedback.</p>
+  </div>
 </div>
 
-<div class="m-4 p-5 bg-gray-100 max-w-4xl mx-auto">
-    <div class="bg-yellow-100 m-5 p-6 rounded-lg shadow-md">
-        <h2 class="text-2xl font-semibold">How can I track my order?</h2>
-        <h3 class="text-xl mt-2">You can track your order using the following steps:</h3>
-        <ol class="list-decimal ml-6 mt-2">
-            <li>Go to the Order <a href="#" class="text-blue-500">Tracking page</a>.</li>
-            <li>Enter your order number and email address.</li>
-            <li>Click on the Track Order button to view the current status of your shipment.</li>
-        </ol>
-        <h4 class="text-lg mt-4">
-            If you encounter any issues, please visit our <a href="#" class="text-blue-500">Help Center</a>.
-        </h4>
-    </div>
-
-    <div class="bg-yellow-100 m-5 p-6 rounded-lg shadow-md">
-        <h2 class="text-2xl font-semibold">What is your return policy?</h2>
-        <h3 class="text-xl mt-2">We offer a 30-day return policy on most items. Here are some key points:</h3>
-        <ul class="list-disc ml-6 mt-2">
-            <li>Items must be in original condition: Unworn, unused, and unwashed.</li>
-            <li>Include original packaging and tags: All items should be returned with their original packaging and tags.</li>
-            <li>Proof of purchase: A receipt or proof of purchase is required.</li>
-        </ul>
-    </div>
+<!-- FAQ Item 2 -->
+<div class="mb-6 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up" style="animation-delay: 150ms">
+  <!-- FAQ content -->
+  <button class="w-full p-6 text-left bg-gray-50 hover:bg-gray-100 transition-colors duration-300 flex justify-between items-center">
+    <h2 class="text-xl font-semibold">How can I track my mentorship progress?</h2>
+    <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  <div class="px-6 pb-6 pt-2 bg-white">
+    <p class="text-gray-600">You can track your progress through our dashboard which shows completed sessions, skills acquired, and mentor feedback.</p>
+  </div>
 </div>
 
-<div class="m-4 p-5 bg-gray-100 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-semibold mb-4">Submit Your Feedback</h2>
-    <textarea id="feedbackInput" class="w-full p-3 border border-gray-300 rounded-lg resize-none" placeholder="Write your feedback here..."></textarea>
-    <button onclick="submitFeedback()" class="mt-3 px-5 py-2 bg-blue-500 text-white rounded-lg w-full sm:w-auto">Submit</button>
+<!-- Feedback Section -->
+<div class="py-16 bg-gray-50">
+<div class="max-w-4xl mx-auto px-4">
+<h2 class="text-3xl font-bold text-center mb-12 animate-fade-in">Submit Your Feedback</h2>
+
+<div class="bg-white p-8 rounded-xl shadow-lg animate-slide-up">
+  <textarea id="feedbackInput" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Write your feedback here..." rows="4"></textarea>
+  <button onclick="submitFeedback()" class="mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto">
+    Submit Feedback
+  </button>
 </div>
 
-<div class="m-4 p-5 bg-gray-100 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-semibold mb-4">User Feedback</h2>
-    <div id="feedbackSection" class="space-y-4"></div>
+<div id="feedbackSection" class="mt-12 space-y-6"></div>
 </div>
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="animate-fade-in">
+  <img src="assets/logo mentor hub.png" alt="Mentor Hub Logo" class="w-40 mb-4">
+  <p class="text-gray-400">Connecting mentors and mentees for professional growth since 2023.</p>
+</div>
+
+<div class="animate-fade-in" style="animation-delay: 100ms">
+  <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+  <ul class="space-y-2">
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Mentors</a></li>
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+  </ul>
+</div>
+
+<div class="animate-fade-in" style="animation-delay: 200ms">
+  <h3 class="text-xl font-semibold mb-4">Resources</h3>
+  <ul class="space-y-2">
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+  </ul>
+</div>
+
+<div class="animate-fade-in" style="animation-delay: 300ms">
+  <h3 class="text-xl font-semibold mb-4">Connect With Us</h3>
+  <div class="flex space-x-4">
+    <a href="#" class="text-gray-400 hover:text-white transition-colors text-2xl"><i class="fab fa-facebook"></i></a>
+    <a href="#" class="text-gray-400 hover:text-white transition-colors text-2xl"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="text-gray-400 hover:text-white transition-colors text-2xl"><i class="fab fa-linkedin"></i></a>
+    <a href="#" class="text-gray-400 hover:text-white transition-colors text-2xl"><i class="fab fa-instagram"></i></a>
+  </div>
+</div>
+</div>
+
+<div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 animate-fade-in">
+<p>&copy; 2023 Mentor Hub. All rights reserved.</p>
+</div>
+</div>
+</footer>
 
 </main>
 <script>
@@ -662,29 +814,35 @@
     mobileMenuOverlay.classList.toggle('invisible');
     mobileMenuOverlay.classList.toggle('opacity-100');
     mobileMenuOverlay.classList.toggle('visible');
+    document.body.classList.toggle('overflow-hidden');
   }
 
   menuToggle.addEventListener('click', toggleMenu);
   menuClose.addEventListener('click', toggleMenu);
   mobileMenuOverlay.addEventListener('click', toggleMenu);
 
-  // Prevent scrolling when menu is open
-  function preventScroll(e) {
-    if (mobileMenu.classList.contains('right-0')) {
-      e.preventDefault();
-    }
-  }
-
-  document.addEventListener('scroll', preventScroll, { passive: false });
-
-  // Your existing carousel and feedback scripts
+  // Carousel functionality
   let slides = document.getElementById("slides");
   let index = 0;
   let totalSlides = slides.children.length;
   let autoSlideTimer;
+  let indicators = document.querySelectorAll('.slide-indicator');
 
   function updateSlide() {
     slides.style.transform = `translateX(-${index * 100}%)`;
+    updateIndicators();
+  }
+
+  function updateIndicators() {
+    indicators.forEach((indicator, i) => {
+      if (i === index) {
+        indicator.classList.remove('bg-white/30');
+        indicator.classList.add('bg-white/80');
+      } else {
+        indicator.classList.remove('bg-white/80');
+        indicator.classList.add('bg-white/30');
+      }
+    });
   }
 
   function nextSlide() {
@@ -698,25 +856,108 @@
   }
 
   function startAutoSlide() {
-    autoSlideTimer = setInterval(nextSlide, 3000);
+    autoSlideTimer = setInterval(nextSlide, 5000);
   }
 
-  document.getElementById("nextBtn").addEventListener("click", nextSlide);
-  document.getElementById("prevBtn").addEventListener("click", prevSlide);
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    nextSlide();
+    resetAutoSlide();
+  });
+
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    prevSlide();
+    resetAutoSlide();
+  });
+
+  // Click on indicator to go to specific slide
+  indicators.forEach((indicator, i) => {
+    indicator.addEventListener('click', () => {
+      index = i;
+      updateSlide();
+      resetAutoSlide();
+    });
+  });
+
+  function resetAutoSlide() {
+    clearInterval(autoSlideTimer);
+    startAutoSlide();
+  }
 
   startAutoSlide();
 
+  // FAQ accordion functionality
+  const faqButtons = document.querySelectorAll('.faq button');
+  faqButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const faqItem = button.parentElement;
+      const content = button.nextElementSibling;
+      const icon = button.querySelector('svg');
+      
+      // Toggle content
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+        icon.classList.remove('rotate-180');
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        icon.classList.add('rotate-180');
+      }
+    });
+  });
+
+  // Feedback submission
   function submitFeedback() {
     let feedbackInput = document.getElementById("feedbackInput");
     let feedbackSection = document.getElementById("feedbackSection");
     if (feedbackInput.value.trim() !== "") {
       let feedbackDiv = document.createElement("div");
-      feedbackDiv.classList.add("p-3", "bg-white", "rounded-lg", "shadow-md");
-      feedbackDiv.textContent = feedbackInput.value;
-      feedbackSection.appendChild(feedbackDiv);
+      feedbackDiv.classList.add("bg-white", "p-6", "rounded-xl", "shadow-md", "animate-fade-in");
+      feedbackDiv.innerHTML = `
+        <div class="flex items-start">
+          <div class="flex-shrink-0">
+            <img src="https://randomuser.me/api/portraits/lego/1.jpg" class="w-12 h-12 rounded-full" alt="User">
+          </div>
+          <div class="ml-4">
+            <p class="text-gray-800">${feedbackInput.value}</p>
+            <p class="text-sm text-gray-500 mt-2">Just now</p>
+          </div>
+        </div>
+      `;
+      feedbackSection.prepend(feedbackDiv);
       feedbackInput.value = "";
     }
   }
+
+  // Animate elements when they come into view
+  const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.animate-slide-up, .animate-fade-in');
+    
+    elements.forEach(element => {
+      const elementPosition = element.getBoundingClientRect().top;
+      const screenPosition = window.innerHeight / 1.3;
+      
+      if (elementPosition < screenPosition) {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }
+    });
+  };
+
+  // Initialize animation states
+  document.querySelectorAll('.animate-slide-up').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(50px)';
+    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+  });
+
+  document.querySelectorAll('.animate-fade-in').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.6s ease-out';
+  });
+
+  // Add scroll event listener
+  window.addEventListener('scroll', animateOnScroll);
+  // Trigger once on load
+  window.addEventListener('load', animateOnScroll);
 </script>
   </body>
 </html>
