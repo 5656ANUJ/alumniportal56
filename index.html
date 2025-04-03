@@ -10,8 +10,9 @@
 </head>
 
 <body class="bg-gray-100 font-sans">
-  <header class="bg-white shadow-md relative z-50">
-    <nav class="container mx-auto flex items-center justify-between p-4 flex-wrap relative">
+  <!-- Navbar -->
+  <header class="bg-white shadow-md">
+    <nav class="container mx-auto flex items-center justify-between p-4 flex-wrap">
       <!-- Logo -->
       <img src="assets/logo mentor hub.png" alt="Mentor Hub Logo" class="w-32 md:w-40" />
   
@@ -19,6 +20,24 @@
       <button id="menu-toggle" class="md:hidden text-xl p-2">
         <i class="fas fa-bars"></i>
       </button>
+
+      <!-- Navigation Links -->
+      <ul id="menu" class="hidden md:flex md:items-center md:gap-4 w-full md:w-auto text-center mt-2 md:mt-0">
+        <li>
+          <a href="#" class="px-4 py-2 rounded-lg font-bold">Become a Mentor</a>
+        </li>
+        <li>
+          <a href="#" class="px-4 py-2 rounded-lg font-bold">Home</a>
+        </li>
+        <li>
+          <a href="#" class="px-4 py-2 rounded-lg font-bold">About</a>
+        </li>
+        <li>
+          <button class="bg-black text-white px-6 py-2 rounded-lg font-bold">
+            Login/Signup
+          </button>
+        </li>
+      </ul>
     </nav>
   
     <!-- Fullscreen Popup Menu -->
