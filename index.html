@@ -709,33 +709,51 @@
       </div>
     </div>
   </div>
- <!-- FAQ Item 1 with animation -->
- <div class="mb-6 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up" style="animation-delay: 100ms">
-  <button class="w-full p-6 text-left bg-gray-50 hover:bg-gray-100 transition-colors duration-300 flex justify-between items-center">
-    <h2 class="text-xl font-semibold">How can I track my mentorship progress?</h2>
-    <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-    </svg>
-  </button>
-  <div class="px-6 pb-6 pt-2 bg-white">
-    <p class="text-gray-600">You can track your progress through our dashboard which shows completed sessions, skills acquired, and mentor feedback.</p>
+<!-- FAQ Section -->
+<div class="py-16 bg-white">
+  <div class="max-w-4xl mx-auto px-4">
+    <h1 class="text-4xl font-bold text-center mb-16 animate-fade-in">Frequently Asked Questions</h1>
+    
+    <!-- FAQ Item 1 -->
+    <div class="mb-6 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up" style="animation-delay: 100ms">
+      <button class="faq-toggle w-full p-6 text-left bg-gray-50 hover:bg-gray-100 transition-colors duration-300 flex justify-between items-center">
+        <h2 class="text-xl font-semibold">How can I track my mentorship progress?</h2>
+        <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div class="faq-content px-6 pb-6 pt-2 bg-white hidden">
+        <p class="text-gray-600">You can track your progress through our dashboard which shows completed sessions, skills acquired, and mentor feedback.</p>
+      </div>
+    </div>
+    
+    <!-- FAQ Item 2 -->
+    <div class="mb-6 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up" style="animation-delay: 150ms">
+      <button class="faq-toggle w-full p-6 text-left bg-gray-50 hover:bg-gray-100 transition-colors duration-300 flex justify-between items-center">
+        <h2 class="text-xl font-semibold">What payment methods do you accept?</h2>
+        <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div class="faq-content px-6 pb-6 pt-2 bg-white hidden">
+        <p class="text-gray-600">We accept all major credit cards, PayPal, and bank transfers for your convenience.</p>
+      </div>
+    </div>
+    
+    <!-- FAQ Item 3 -->
+    <div class="mb-6 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up" style="animation-delay: 200ms">
+      <button class="faq-toggle w-full p-6 text-left bg-gray-50 hover:bg-gray-100 transition-colors duration-300 flex justify-between items-center">
+        <h2 class="text-xl font-semibold">Can I change my mentor?</h2>
+        <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div class="faq-content px-6 pb-6 pt-2 bg-white hidden">
+        <p class="text-gray-600">Yes, you can request a mentor change at any time through your account settings.</p>
+      </div>
+    </div>
   </div>
 </div>
-
-<!-- FAQ Item 2 -->
-<div class="mb-6 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up" style="animation-delay: 150ms">
-  <!-- FAQ content -->
-  <button class="w-full p-6 text-left bg-gray-50 hover:bg-gray-100 transition-colors duration-300 flex justify-between items-center">
-    <h2 class="text-xl font-semibold">How can I track my mentorship progress?</h2>
-    <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-    </svg>
-  </button>
-  <div class="px-6 pb-6 pt-2 bg-white">
-    <p class="text-gray-600">You can track your progress through our dashboard which shows completed sessions, skills acquired, and mentor feedback.</p>
-  </div>
-</div>
-
 <!-- Feedback Section -->
 <div class="py-16 bg-gray-50">
 <div class="max-w-4xl mx-auto px-4">
@@ -885,22 +903,28 @@
 
   startAutoSlide();
 
-  // FAQ accordion functionality
-  const faqButtons = document.querySelectorAll('.faq button');
-  faqButtons.forEach(button => {
+  // FAQ toggle functionality
+  document.querySelectorAll('.faq-toggle').forEach(button => {
     button.addEventListener('click', () => {
-      const faqItem = button.parentElement;
-      const content = button.nextElementSibling;
+      const faqItem = button.closest('.mb-6');
+      const content = faqItem.querySelector('.faq-content');
       const icon = button.querySelector('svg');
       
-      // Toggle content
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-        icon.classList.remove('rotate-180');
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-        icon.classList.add('rotate-180');
-      }
+      // Toggle content visibility
+      content.classList.toggle('hidden');
+      
+      // Toggle icon rotation
+      icon.classList.toggle('rotate-180');
+      
+      // Close other open FAQs
+      document.querySelectorAll('.faq-toggle').forEach(otherButton => {
+        if (otherButton !== button) {
+          const otherContent = otherButton.closest('.mb-6').querySelector('.faq-content');
+          const otherIcon = otherButton.querySelector('svg');
+          otherContent.classList.add('hidden');
+          otherIcon.classList.remove('rotate-180');
+        }
+      });
     });
   });
 
