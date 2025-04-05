@@ -60,6 +60,29 @@
         transform: translateY(-3px);
         box-shadow: 0 10px 20px rgba(252, 163, 17, 0.3);
       }
+      .animate-fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
     </style>
   </head>
   <body class="bg-accent font-sans">
@@ -74,7 +97,7 @@
         <!-- Desktop Navigation Links -->
         <ul class="hidden md:flex md:items-center md:gap-4">
           <li class="animate-fade-in" style="animation-delay: 100ms">
-            <a href="#" class="px-4 py-2 rounded-lg font-bold text-light hover:text-secondary transition-colors">Become a Mentor</a>
+            <a href="login.html" class="px-4 py-2 rounded-lg font-bold text-light hover:text-secondary transition-colors">Become a Mentor</a>
           </li>
           <li class="animate-fade-in" style="animation-delay: 200ms">
             <a href="#" class="px-4 py-2 rounded-lg font-bold text-light hover:text-secondary transition-colors">Home</a>
@@ -131,42 +154,60 @@
     </header>
 
     <main>
-      <!-- Hero Carousel -->
-      <div class="relative w-full max-w-7xl mx-lauto overflow-hidden rounded-xl shadow-2xl mb-16 animate-fade-in"
-           style="height: 30vh; min-height: 250px; max-height: 500px;">
-        <div id="slides" class="flex h-full transition-transform duration-700 ease-in-out">
-          <div class="w-full flex-shrink-0 relative h-full">
-            <img src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
-                 class="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-500"/>
-            <div class="absolute inset-0 flex items-center justify-center bg-dark bg-opacity-50">
-              <h2 class="text-3xl md:text-5xl font-bold text-light text-center px-4 animate-slide-up">
-                Connect with Top Mentors
-              </h2>
-            </div>
-          </div>
-          <div class="w-full flex-shrink-0 relative h-full">
-            <img src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp"
-                 class="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-500"/>
-            <div class="absolute inset-0 flex items-center justify-center bg-dark bg-opacity-50">
-              <h2 class="text-3xl md:text-5xl font-bold text-light text-center px-4 animate-slide-up">
-                Accelerate Your Learning
-              </h2>
-            </div>
-          </div>
-        </div>
-        <button id="prevBtn"
-                class="absolute left-5 top-1/2 transform -translate-y-1/2 bg-secondary/80 text-dark px-4 py-3 rounded-full shadow-lg hover:bg-secondary hover:scale-110 transition-all duration-300">
-          ❮
-        </button>
-        <button id="nextBtn"
-                class="absolute right-5 top-1/2 transform -translate-y-1/2 bg-secondary/80 text-dark px-4 py-3 rounded-full shadow-lg hover:bg-secondary hover:scale-110 transition-all duration-300">
-          ❯
-        </button>
-        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-          <div class="w-3 h-3 rounded-full bg-secondary/80 cursor-pointer slide-indicator"></div>
-          <div class="w-3 h-3 rounded-full bg-secondary/30 cursor-pointer slide-indicator"></div>
+     <!-- Hero Carousel -->
+     <div class="relative w-full overflow-hidden shadow-2xl mb-16 animate-fade-in"
+     style="height: 60vh; min-height: 300px; max-height: 600px;">
+  <div id="slides" class="flex w-full h-full transition-transform duration-700 ease-in-out">
+    
+    <!-- Slide 1 - Mentorship -->
+    <div class="w-full flex-shrink-0 relative h-full">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+           class="w-full h-full object-cover brightness-90"/>
+      <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+        <div class="text-center px-4 animate-slide-up">
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Connect with Top Mentors</h2>
+          <p class="text-xl md:text-2xl text-white max-w-2xl mx-auto">Find experienced professionals ready to guide your journey</p>
+          <button class="mt-6 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
+            Browse Mentors
+          </button>
         </div>
       </div>
+    </div>
+
+    <!-- Slide 2 - Learning -->
+    <div class="w-full flex-shrink-0 relative h-full">
+      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+           class="w-full h-full object-cover brightness-90"/>
+      <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+        <div class="text-center px-4 animate-slide-up">
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Accelerate Your Learning</h2>
+          <p class="text-xl md:text-2xl text-white max-w-2xl mx-auto">Personalized guidance to help you reach your goals faster</p>
+          <a href="login.html">
+          <button class="mt-6 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
+            Get Started
+          </button>
+        </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <button id="prevBtn"
+          class="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 text-black px-4 py-3 rounded-full shadow-lg hover:bg-opacity-100 hover:scale-110 transition-all duration-300 z-10">
+    ❮
+  </button>
+  <button id="nextBtn"
+          class="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 text-black px-4 py-3 rounded-full shadow-lg hover:bg-opacity-100 hover:scale-110 transition-all duration-300 z-10">
+    ❯
+  </button>
+
+  <!-- Indicators -->
+  <div class="absolute bottom-8 left-0 right-0 flex justify-center gap-3">
+    <div class="w-3 h-3 rounded-full bg-white bg-opacity-80 cursor-pointer slide-indicator" data-index="0"></div>
+    <div class="w-3 h-3 rounded-full bg-white bg-opacity-30 cursor-pointer slide-indicator" data-index="1"></div>
+  </div>
+</div>
 
       <!-- CTA Buttons -->
       <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-40 p-10 text-center">
@@ -821,68 +862,66 @@
       mobileMenuOverlay.addEventListener('click', toggleMenu);
 
       // Carousel functionality
-      let slides = document.getElementById("slides");
-      let index = 0;
-      let totalSlides = slides.children.length;
-      let autoSlideTimer;
-      let indicators = document.querySelectorAll('.slide-indicator');
+      document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.getElementById('slides');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicators = document.querySelectorAll('.slide-indicator');
+    let currentIndex = 0;
+    const totalSlides = document.querySelectorAll('#slides > div').length;
 
-      function updateSlide() {
-        slides.style.transform = `translateX(-${index * 100}%)`;
-        updateIndicators();
-      }
-
-      function updateIndicators() {
-        indicators.forEach((indicator, i) => {
-          if (i === index) {
-            indicator.classList.remove('bg-secondary/30');
-            indicator.classList.add('bg-secondary/80');
-          } else {
-            indicator.classList.remove('bg-secondary/80');
-            indicator.classList.add('bg-secondary/30');
-          }
-        });
-      }
-
-      function nextSlide() {
-        index = (index + 1) % totalSlides;
-        updateSlide();
-      }
-
-      function prevSlide() {
-        index = (index - 1 + totalSlides) % totalSlides;
-        updateSlide();
-      }
-
-      function startAutoSlide() {
-        autoSlideTimer = setInterval(nextSlide, 5000);
-      }
-
-      document.getElementById("nextBtn").addEventListener("click", () => {
-        nextSlide();
-        resetAutoSlide();
+    function updateSlider() {
+      slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // Update indicators
+      indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('bg-opacity-80', index === currentIndex);
+        indicator.classList.toggle('bg-opacity-30', index !== currentIndex);
       });
+    }
 
-      document.getElementById("prevBtn").addEventListener("click", () => {
-        prevSlide();
-        resetAutoSlide();
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    // Auto-advance every 5 seconds
+    let slideInterval = setInterval(nextSlide, 5000);
+
+    // Pause on hover
+    slides.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    slides.parentElement.addEventListener('mouseleave', () => {
+      slideInterval = setInterval(nextSlide, 5000);
+    });
+
+    // Button controls
+    nextBtn.addEventListener('click', () => {
+      clearInterval(slideInterval);
+      nextSlide();
+      slideInterval = setInterval(nextSlide, 5000);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      clearInterval(slideInterval);
+      prevSlide();
+      slideInterval = setInterval(nextSlide, 5000);
+    });
+
+    // Indicator controls
+    indicators.forEach(indicator => {
+      indicator.addEventListener('click', () => {
+        clearInterval(slideInterval);
+        currentIndex = parseInt(indicator.dataset.index);
+        updateSlider();
+        slideInterval = setInterval(nextSlide, 5000);
       });
-
-      // Click on indicator to go to specific slide
-      indicators.forEach((indicator, i) => {
-        indicator.addEventListener('click', () => {
-          index = i;
-          updateSlide();
-          resetAutoSlide();
-        });
-      });
-
-      function resetAutoSlide() {
-        clearInterval(autoSlideTimer);
-        startAutoSlide();
-      }
-
-      startAutoSlide();
+    });
+  });
 
       // FAQ toggle functionality
       document.querySelectorAll('.faq-toggle').forEach(button => {
