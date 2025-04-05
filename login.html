@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mentor-Hub | Login</title>
+    <title>Mentor-Hub | Authentication</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -34,127 +34,278 @@
       .input-focus:focus {
         box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.5);
       }
+      .auth-container {
+        perspective: 1000px;
+      }
+      .auth-form {
+        transition: transform 0.6s, opacity 0.4s;
+        transform-style: preserve-3d;
+      }
+      .flipped {
+        transform: rotateY(180deg);
+        opacity: 0;
+        position: absolute;
+      }
+      .unflipped {
+        transform: rotateY(0deg);
+        opacity: 1;
+      }
     </style>
   </head>
   <body class="gradient-bg font-sans min-h-screen flex items-center justify-center p-4">
-    <div class="bg-primary rounded-xl shadow-xl p-8 w-full max-w-md">
-      <!-- Logo -->
-      <div class="flex justify-center mb-6">
-        <img src="assets/logo mentor hub.png" alt="Mentor Hub Logo" class="h-16">
-      </div>
-      
-      <h2 class="text-center text-3xl font-bold text-light mb-8">Welcome Back</h2>
-      
+    <div class="auth-container relative w-full max-w-md">
       <!-- Login Form -->
-      <form id="loginForm" class="space-y-6">
-        <div>
-          <label for="email" class="block text-sm font-medium text-accent mb-2">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="your@email.com"
-            class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
-          />
-          <p id="emailError" class="mt-1 text-sm text-red-400 hidden">Please enter a valid email address</p>
+      <div id="loginFormContainer" class="auth-form unflipped bg-primary rounded-xl shadow-xl p-8 w-full">
+        <!-- Logo -->
+        <div class="flex justify-center mb-6">
+          <img src="assets/logo mentor hub.png" alt="Mentor Hub Logo" class="h-16">
         </div>
         
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <label for="password" class="block text-sm font-medium text-accent">Password</label>
-            <a href="#" class="text-sm text-secondary hover:text-yellow-500 transition-colors">Forgot password?</a>
+        <h2 class="text-center text-3xl font-bold text-light mb-8">Welcome Back</h2>
+        
+        <form id="loginForm" class="space-y-6">
+          <div>
+            <label for="loginEmail" class="block text-sm font-medium text-accent mb-2">Email Address</label>
+            <input
+              type="email"
+              id="loginEmail"
+              name="email"
+              required
+              placeholder="your@email.com"
+              class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
+            />
+            <p id="loginEmailError" class="mt-1 text-sm text-red-400 hidden">Please enter a valid email address</p>
           </div>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            placeholder="••••••••"
-            class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
-          />
-          <p id="passwordError" class="mt-1 text-sm text-red-400 hidden">Password must be at least 6 characters</p>
-        </div>
-        
-        <div class="flex items-center">
-          <input
-            id="remember-me"
-            name="remember-me"
-            type="checkbox"
-            class="h-4 w-4 text-secondary focus:ring-secondary border-accent/30 rounded"
-          />
-          <label for="remember-me" class="ml-2 block text-sm text-accent">Remember me</label>
-        </div>
-        
-        <button
-          type="submit"
-          id="submit"
-          class="w-full bg-secondary text-dark font-bold py-3 px-4 rounded-lg hover:bg-yellow-500 transition-colors btn-hover-effect focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
-        >
-          Sign In
-        </button>
-      </form>
-      
-      <!-- Social Login -->
-      <div class="mt-8">
-        <div class="relative">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-accent/20"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-primary text-accent">Or continue with</span>
-          </div>
-        </div>
-        
-        <div class="mt-6 grid grid-cols-2 gap-3">
-          <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-accent/20 rounded-lg bg-primary text-accent hover:bg-accent/10 transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.933.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.14 18.163 20 14.418 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path>
-            </svg>
-          </a>
           
-          <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-accent/20 rounded-lg bg-primary text-accent hover:bg-accent/10 transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm6.25 15.625c-.322.578-1.197.859-1.953.859h-8.594c-.756 0-1.631-.281-1.953-.859-.322-.578-.322-1.356 0-1.953l4.297-7.422c.322-.578 1.197-.859 1.953-.859.756 0 1.631.281 1.953.859l4.297 7.422c.322.597.322 1.375 0 1.953zM10 7.187L6.875 12.5h6.25L10 7.187z" clip-rule="evenodd"></path>
-            </svg>
-          </a>
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label for="loginPassword" class="block text-sm font-medium text-accent">Password</label>
+              <a href="#" class="text-sm text-secondary hover:text-yellow-500 transition-colors">Forgot password?</a>
+            </div>
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              required
+              placeholder="••••••••"
+              class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
+            />
+            <p id="loginPasswordError" class="mt-1 text-sm text-red-400 hidden">Password must be at least 6 characters</p>
+          </div>
+          
+          <div class="flex items-center">
+            <input
+              id="remember-me"
+              name="remember-me"
+              type="checkbox"
+              class="h-4 w-4 text-secondary focus:ring-secondary border-accent/30 rounded"
+            />
+            <label for="remember-me" class="ml-2 block text-sm text-accent">Remember me</label>
+          </div>
+          
+          <button
+            type="submit"
+            id="loginSubmit"
+            class="w-full bg-secondary text-dark font-bold py-3 px-4 rounded-lg hover:bg-yellow-500 transition-colors btn-hover-effect focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
+          >
+            Sign In
+          </button>
+        </form>
+        
+        <!-- Social Login -->
+        <div class="mt-8">
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-accent/20"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-primary text-accent">Or continue with</span>
+            </div>
+          </div>
+          
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-accent/20 rounded-lg bg-primary text-accent hover:bg-accent/10 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.933.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.14 18.163 20 14.418 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+            
+            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-accent/20 rounded-lg bg-primary text-accent hover:bg-accent/10 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm6.25 15.625c-.322.578-1.197.859-1.953.859h-8.594c-.756 0-1.631-.281-1.953-.859-.322-.578-.322-1.356 0-1.953l4.297-7.422c.322-.578 1.197-.859 1.953-.859.756 0 1.631.281 1.953.859l4.297 7.422c.322.597.322 1.375 0 1.953zM10 7.187L6.875 12.5h6.25L10 7.187z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Sign Up Link -->
+        <div class="mt-8 text-center text-sm text-accent">
+          Don't have an account? 
+          <button id="showSignup" class="font-medium text-secondary hover:text-yellow-500 transition-colors">Sign up</button>
         </div>
       </div>
-      
-      <!-- Sign Up Link -->
-      <div class="mt-8 text-center text-sm text-accent">
-        Don't have an account? 
-        <a href="#" class="font-medium text-secondary hover:text-yellow-500 transition-colors">Sign up</a>
+
+      <!-- Signup Form -->
+      <div id="signupFormContainer" class="auth-form flipped bg-primary rounded-xl shadow-xl p-8 w-full">
+        <!-- Logo -->
+        <div class="flex justify-center mb-6">
+          <img src="assets/logo mentor hub.png" alt="Mentor Hub Logo" class="h-16">
+        </div>
+        
+        <h2 class="text-center text-3xl font-bold text-light mb-8">Create Account</h2>
+        
+        <form id="signupForm" class="space-y-6">
+          <div>
+            <label for="signupName" class="block text-sm font-medium text-accent mb-2">Full Name</label>
+            <input
+              type="text"
+              id="signupName"
+              name="name"
+              required
+              placeholder="John Doe"
+              class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
+            />
+            <p id="signupNameError" class="mt-1 text-sm text-red-400 hidden">Please enter your full name</p>
+          </div>
+          
+          <div>
+            <label for="signupEmail" class="block text-sm font-medium text-accent mb-2">Email Address</label>
+            <input
+              type="email"
+              id="signupEmail"
+              name="email"
+              required
+              placeholder="your@email.com"
+              class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
+            />
+            <p id="signupEmailError" class="mt-1 text-sm text-red-400 hidden">Please enter a valid email address</p>
+          </div>
+          
+          <div>
+            <label for="signupPassword" class="block text-sm font-medium text-accent mb-2">Password</label>
+            <input
+              type="password"
+              id="signupPassword"
+              name="password"
+              required
+              placeholder="••••••••"
+              class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
+            />
+            <p id="signupPasswordError" class="mt-1 text-sm text-red-400 hidden">Password must be at least 8 characters</p>
+          </div>
+          
+          <div>
+            <label for="signupConfirmPassword" class="block text-sm font-medium text-accent mb-2">Confirm Password</label>
+            <input
+              type="password"
+              id="signupConfirmPassword"
+              name="confirmPassword"
+              required
+              placeholder="••••••••"
+              class="w-full px-4 py-3 bg-primary border border-accent/20 rounded-lg text-light placeholder-accent/50 focus:outline-none input-focus focus:border-secondary transition duration-200"
+            />
+            <p id="signupConfirmPasswordError" class="mt-1 text-sm text-red-400 hidden">Passwords don't match</p>
+          </div>
+          
+          <div class="flex items-center">
+            <input
+              id="terms"
+              name="terms"
+              type="checkbox"
+              required
+              class="h-4 w-4 text-secondary focus:ring-secondary border-accent/30 rounded"
+            />
+            <label for="terms" class="ml-2 block text-sm text-accent">
+              I agree to the <a href="#" class="text-secondary hover:text-yellow-500">Terms of Service</a> and <a href="#" class="text-secondary hover:text-yellow-500">Privacy Policy</a>
+            </label>
+          </div>
+          <p id="termsError" class="mt-1 text-sm text-red-400 hidden">You must agree to the terms</p>
+          
+          <button
+            type="submit"
+            id="signupSubmit"
+            class="w-full bg-secondary text-dark font-bold py-3 px-4 rounded-lg hover:bg-yellow-500 transition-colors btn-hover-effect focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
+          >
+            Create Account
+          </button>
+        </form>
+        
+        <!-- Social Signup -->
+        <div class="mt-8">
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-accent/20"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-primary text-accent">Or sign up with</span>
+            </div>
+          </div>
+          
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-accent/20 rounded-lg bg-primary text-accent hover:bg-accent/10 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.933.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.14 18.163 20 14.418 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+            
+            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-accent/20 rounded-lg bg-primary text-accent hover:bg-accent/10 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm6.25 15.625c-.322.578-1.197.859-1.953.859h-8.594c-.756 0-1.631-.281-1.953-.859-.322-.578-.322-1.356 0-1.953l4.297-7.422c.322-.578 1.197-.859 1.953-.859.756 0 1.631.281 1.953.859l4.297 7.422c.322.597.322 1.375 0 1.953zM10 7.187L6.875 12.5h6.25L10 7.187z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Login Link -->
+        <div class="mt-8 text-center text-sm text-accent">
+          Already have an account? 
+          <button id="showLogin" class="font-medium text-secondary hover:text-yellow-500 transition-colors">Sign in</button>
+        </div>
       </div>
     </div>
 
     <script>
+      // Toggle between login and signup forms
+      document.getElementById('showSignup').addEventListener('click', function() {
+        document.getElementById('loginFormContainer').classList.add('flipped');
+        document.getElementById('signupFormContainer').classList.remove('flipped');
+        document.getElementById('signupFormContainer').classList.add('unflipped');
+      });
+      
+      document.getElementById('showLogin').addEventListener('click', function() {
+        document.getElementById('signupFormContainer').classList.add('flipped');
+        document.getElementById('signupFormContainer').classList.remove('unflipped');
+        document.getElementById('loginFormContainer').classList.remove('flipped');
+        document.getElementById('loginFormContainer').classList.add('unflipped');
+      });
+
+      // Login form validation
       document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
         // Get form values
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
         const rememberMe = document.getElementById('remember-me').checked;
         
         // Reset error messages
-        document.getElementById('emailError').classList.add('hidden');
-        document.getElementById('passwordError').classList.add('hidden');
+        document.getElementById('loginEmailError').classList.add('hidden');
+        document.getElementById('loginPasswordError').classList.add('hidden');
         
         // Validate email
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          document.getElementById('emailError').classList.remove('hidden');
+          document.getElementById('loginEmailError').classList.remove('hidden');
           return;
         }
         
         // Validate password
         if (!password || password.length < 6) {
-          document.getElementById('passwordError').classList.remove('hidden');
+          document.getElementById('loginPasswordError').classList.remove('hidden');
           return;
         }
         
         // Form is valid - simulate login
-        const submitBtn = document.getElementById('submit');
+        const submitBtn = document.getElementById('loginSubmit');
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
           <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-dark inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -175,16 +326,98 @@
         }, 1500);
       });
       
+      // Signup form validation
+      document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('signupConfirmPassword').value;
+        const terms = document.getElementById('terms').checked;
+        
+        // Reset error messages
+        document.getElementById('signupNameError').classList.add('hidden');
+        document.getElementById('signupEmailError').classList.add('hidden');
+        document.getElementById('signupPasswordError').classList.add('hidden');
+        document.getElementById('signupConfirmPasswordError').classList.add('hidden');
+        document.getElementById('termsError').classList.add('hidden');
+        
+        let isValid = true;
+        
+        // Validate name
+        if (!name || name.trim().length < 2) {
+          document.getElementById('signupNameError').classList.remove('hidden');
+          isValid = false;
+        }
+        
+        // Validate email
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          document.getElementById('signupEmailError').classList.remove('hidden');
+          isValid = false;
+        }
+        
+        // Validate password
+        if (!password || password.length < 8) {
+          document.getElementById('signupPasswordError').classList.remove('hidden');
+          isValid = false;
+        }
+        
+        // Validate confirm password
+        if (password !== confirmPassword) {
+          document.getElementById('signupConfirmPasswordError').classList.remove('hidden');
+          isValid = false;
+        }
+        
+        // Validate terms
+        if (!terms) {
+          document.getElementById('termsError').classList.remove('hidden');
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Form is valid - simulate signup
+        const submitBtn = document.getElementById('signupSubmit');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-dark inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Creating account...
+        `;
+        
+        // Simulate API call
+        setTimeout(() => {
+          alert(`Account created successfully!\nName: ${name}\nEmail: ${email}`);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Create Account';
+          
+          // Switch to login form after successful signup
+          document.getElementById('signupFormContainer').classList.add('flipped');
+          document.getElementById('signupFormContainer').classList.remove('unflipped');
+          document.getElementById('loginFormContainer').classList.remove('flipped');
+          document.getElementById('loginFormContainer').classList.add('unflipped');
+          
+          // Pre-fill email in login form
+          document.getElementById('loginEmail').value = email;
+        }, 1500);
+      });
+      
       // Responsive adjustments
       function handleResize() {
-        const form = document.querySelector('form');
-        if (window.innerWidth < 640) {
-          form.classList.add('space-y-4');
-          form.classList.remove('space-y-6');
-        } else {
-          form.classList.add('space-y-6');
-          form.classList.remove('space-y-4');
-        }
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+          if (window.innerWidth < 640) {
+            form.classList.add('space-y-4');
+            form.classList.remove('space-y-6');
+          } else {
+            form.classList.add('space-y-6');
+            form.classList.remove('space-y-4');
+          }
+        });
       }
       
       // Initial call and event listener
