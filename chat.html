@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mentor Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#000000',
+                        navy: '#14213D',
+                        orange: '#FCA311',
+                        lightgray: '#E5E5E5',
+                        white: '#FFFFFF',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-chat-pattern {
+                background-image: url('https://web.whatsapp.com/img/bg-chat-tile-dark_a4be512e7195b6b733d9110b408f075d.png');
+                background-repeat: repeat;
+                background-size: 400px;
+            }
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-lightgray h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-6xl h-[90vh] flex flex-col md:flex-row overflow-hidden" id="app">
+        <!-- Sidebar -->
+        <div class="w-full md:w-1/3 lg:w-1/4 bg-navy text-white flex flex-col h-full" id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="bg-black p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-orange flex items-center justify-center font-bold">Y</div>
+                    <span class="font-medium">Your Profile</span>
+                </div>
+                <div class="text-gray-300">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="p-3 bg-navy">
+                <div class="relative">
+                    <input type="text" placeholder="Search or start new chat" 
+                           class="w-full py-2 pl-10 pr-4 rounded-full bg-black bg-opacity-30 text-white placeholder-gray-300 focus:outline-none">
+                    <i class="fas fa-search absolute left-3 top-2.5 text-gray-300"></i>
+                </div>
+            </div>
+            
+            <!-- Chat List -->
+            <div class="flex-1 overflow-y-auto no-scrollbar">
+                <!-- Mentors -->
+                <div class="chat-item flex items-center p-3 border-b border-navy border-opacity-50 hover:bg-navy hover:bg-opacity-50 cursor-pointer active" data-mentor="sarah">
+                    <div class="w-12 h-12 rounded-full bg-orange flex items-center justify-center font-bold text-navy mr-3">SJ</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold truncate">Sarah Johnson <span class="bg-orange text-navy text-xs px-2 py-0.5 rounded-full ml-1">Mentor</span></h3>
+                            <span class="text-xs text-gray-300">10:30 AM</span>
+                        </div>
+                        <p class="text-sm text-gray-300 truncate">Let's review your resume together</p>
+                    </div>
+                </div>
+                
+                <div class="chat-item flex items-center p-3 border-b border-navy border-opacity-50 hover:bg-navy hover:bg-opacity-50 cursor-pointer" data-mentor="michael">
+                    <div class="w-12 h-12 rounded-full bg-orange flex items-center justify-center font-bold text-navy mr-3">MC</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold truncate">Michael Chen <span class="bg-orange text-navy text-xs px-2 py-0.5 rounded-full ml-1">Mentor</span></h3>
+                            <span class="text-xs text-gray-300">Yesterday</span>
+                        </div>
+                        <p class="text-sm text-gray-300 truncate">Technical interview prep materials</p>
+                    </div>
+                </div>
+                
+                <div class="chat-item flex items-center p-3 border-b border-navy border-opacity-50 hover:bg-navy hover:bg-opacity-50 cursor-pointer" data-mentor="priya">
+                    <div class="w-12 h-12 rounded-full bg-orange flex items-center justify-center font-bold text-navy mr-3">PK</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold truncate">Priya Kapoor <span class="bg-orange text-navy text-xs px-2 py-0.5 rounded-full ml-1">Mentor</span></h3>
+                            <span class="text-xs text-gray-300">2 days ago</span>
+                        </div>
+                        <p class="text-sm text-gray-300 truncate">Networking strategy for you</p>
+                    </div>
+                </div>
+                
+                <!-- Groups -->
+                <div class="chat-item flex items-center p-3 border-b border-navy border-opacity-50 hover:bg-navy hover:bg-opacity-50 cursor-pointer" data-mentor="career-group">
+                    <div class="w-12 h-12 rounded-full bg-orange flex items-center justify-center font-bold text-navy mr-3">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold truncate">Career Growth Group</h3>
+                            <span class="text-xs text-gray-300">Yesterday</span>
+                        </div>
+                        <p class="text-sm text-gray-300 truncate">Alex: Has anyone worked with AWS?</p>
+                    </div>
+                </div>
+                
+                <div class="chat-item flex items-center p-3 border-b border-navy border-opacity-50 hover:bg-navy hover:bg-opacity-50 cursor-pointer" data-mentor="tech-mentors">
+                    <div class="w-12 h-12 rounded-full bg-orange flex items-center justify-center font-bold text-navy mr-3">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold truncate">Tech Mentors Circle</h3>
+                            <span class="text-xs text-gray-300">3/15/23</span>
+                        </div>
+                        <p class="text-sm text-gray-300 truncate">Sarah shared a resource</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Area -->
+        <div class="flex-1 flex flex-col h-full bg-lightgray bg-chat-pattern" id="chatArea">
+            <!-- Chat Header -->
+            <div class="bg-black text-white p-3 flex items-center">
+                <i class="fas fa-arrow-left mr-3 cursor-pointer md:hidden" id="backButton"></i>
+                <div class="w-10 h-10 rounded-full bg-orange flex items-center justify-center font-bold text-navy mr-3">SJ</div>
+                <div class="flex-1">
+                    <h3 class="font-semibold">Sarah Johnson <span class="bg-orange text-navy text-xs px-2 py-0.5 rounded-full ml-1">Mentor</span></h3>
+                    <p class="text-xs text-gray-300">Online</p>
+                </div>
+                <div class="flex space-x-4 text-gray-300">
+                    <i class="fas fa-phone cursor-pointer"></i>
+                    <i class="fas fa-video cursor-pointer"></i>
+                    <i class="fas fa-ellipsis-v cursor-pointer"></i>
+                </div>
+            </div>
+            
+            <!-- Messages -->
+            <div class="flex-1 overflow-y-auto p-4 no-scrollbar" id="messagesContainer">
+                <!-- Messages will be inserted here -->
+                <div class="mb-4 flex flex-col items-start">
+                    <div class="bg-white text-navy max-w-xs md:max-w-md lg:max-w-lg rounded-r-xl rounded-bl-xl px-4 py-2 shadow">
+                        Hi there! I'm Sarah Johnson, your career mentor. How can I help you today?
+                    </div>
+                    <span class="text-xs text-white mt-1">10:30 AM</span>
+                </div>
+                
+                <div class="mb-4 flex flex-col items-end">
+                    <div class="bg-orange text-navy max-w-xs md:max-w-md lg:max-w-lg rounded-l-xl rounded-br-xl px-4 py-2 shadow">
+                        Hi Sarah! I wanted to ask about improving my resume for tech jobs.
+                    </div>
+                    <span class="text-xs text-white mt-1">10:32 AM</span>
+                </div>
+                
+                <div class="mb-4 flex flex-col items-start">
+                    <div class="bg-white text-navy max-w-xs md:max-w-md lg:max-w-lg rounded-r-xl rounded-bl-xl px-4 py-2 shadow">
+                        That's a great question! I'd be happy to review your resume. Could you share it with me?
+                    </div>
+                    <span class="text-xs text-white mt-1">10:33 AM</span>
+                </div>
+            </div>
+            
+            <!-- Typing Indicator -->
+            <div class="hidden bg-black bg-opacity-50 text-white text-xs italic px-4 py-1" id="typingIndicator">
+                Sarah is typing...
+            </div>
+            
+            <!-- Input Area -->
+            <div class="bg-black p-3 flex items-center">
+                <i class="fas fa-paperclip text-gray-300 mx-2 cursor-pointer"></i>
+                <i class="far fa-smile text-gray-300 mx-2 cursor-pointer"></i>
+                <input type="text" placeholder="Type a message" 
+                       class="flex-1 py-2 px-4 rounded-full bg-white bg-opacity-10 text-white placeholder-gray-300 focus:outline-none"
+                       id="messageInput">
+                <button class="w-10 h-10 rounded-full bg-orange text-navy flex items-center justify-center ml-2 cursor-pointer"
+                        id="sendButton">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const mentors = {
+            sarah: {
+                name: "Sarah Johnson",
+                avatar: "SJ",
+                role: "Career Development Mentor",
+                bio: "10+ years experience helping professionals advance their careers",
+                prompt: "You are Sarah Johnson, a career development mentor with over 10 years of experience. You provide practical, actionable advice on resumes, interviews, and career growth. You're warm but professional, offering specific suggestions rather than vague advice. Ask clarifying questions when needed."
+            },
+            michael: {
+                name: "Michael Chen",
+                avatar: "MC",
+                role: "Technical Interview Coach",
+                bio: "Former FAANG engineer specializing in technical interview prep",
+                prompt: "You are Michael Chen, a technical interview specialist who previously worked at Google. You help candidates prepare for coding interviews with a focus on data structures, algorithms, and system design. Provide clear explanations and practical exercises."
+            },
+            priya: {
+                name: "Priya Kapoor",
+                avatar: "PK",
+                role: "Networking Strategist",
+                bio: "Helps professionals build meaningful industry connections",
+                prompt: "You are Priya Kapoor, a networking expert who helps professionals build valuable connections. Teach strategies for LinkedIn, informational interviews, and networking events. Emphasize relationship-building over transactional approaches."
+            },
+            'career-group': {
+                name: "Career Growth Group",
+                avatar: "<i class='fas fa-users'></i>",
+                role: "Peer Support Network",
+                bio: "Community of professionals supporting each other's career development",
+                prompt: "You are facilitating a career growth discussion group. Encourage participation from all members, ask thought-provoking questions, and summarize key points. Keep the conversation professional but friendly."
+            },
+            'tech-mentors': {
+                name: "Tech Mentors Circle",
+                avatar: "<i class='fas fa-laptop-code'></i>",
+                role: "Technology Professionals Network",
+                bio: "Group of experienced tech professionals sharing knowledge",
+                prompt: "You are moderating a tech mentors group. Provide expert insights on software development, tools, and best practices. When appropriate, ask other mentors to contribute their perspectives."
+            }
+        };
+
+        // State management
+        let currentMentor = 'sarah';
+        let conversationHistory = {
+            sarah: [
+                { role: "assistant", content: "Hi there! I'm Sarah Johnson, your career mentor. How can I help you today?" },
+                { role: "user", content: "Hi Sarah! I wanted to ask about improving my resume for tech jobs." },
+                { role: "assistant", content: "That's a great question! I'd be happy to review your resume. Could you share it with me?" }
+            ],
+            michael: [
+                { role: "assistant", content: "Hello! Michael here. Ready for our technical interview prep?" }
+            ],
+            priya: [
+                { role: "assistant", content: "Hi! Let's work on your networking strategy this week." }
+            ],
+            'career-group': [
+                { role: "assistant", content: "Welcome everyone to the Career Growth Group!" }
+            ],
+            'tech-mentors': [
+                { role: "assistant", content: "I've shared some coding resources in the group files." }
+            ]
+        };
+
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const chatArea = document.getElementById('chatArea');
+        const backButton = document.getElementById('backButton');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const chatItems = document.querySelectorAll('.chat-item');
+
+        // Check if mobile view
+        function isMobile() {
+            return window.matchMedia("(max-width: 768px)").matches;
+        }
+
+        // Initialize the app
+        function init() {
+            if (isMobile()) {
+                sidebar.classList.remove('hidden');
+                chatArea.classList.add('hidden');
+            }
+            
+            // Load initial chat
+            renderMessages(currentMentor);
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Chat item clicks
+            chatItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    currentMentor = item.dataset.mentor;
+                    renderMessages(currentMentor);
+                    
+                    // Update active state
+                    chatItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    // For mobile, switch to chat view
+                    if (isMobile()) {
+                        sidebar.classList.add('hidden');
+                        chatArea.classList.remove('hidden');
+                    }
+                });
+            });
+            
+            // Back button (mobile)
+            backButton.addEventListener('click', () => {
+                sidebar.classList.remove('hidden');
+                chatArea.classList.add('hidden');
+            });
+            
+            // Send message on button click
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Send message on Enter key
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+
+        // Render messages for a specific mentor
+        function renderMessages(mentorId) {
+            messagesContainer.innerHTML = '';
+            
+            // Update chat header
+            const mentor = mentors[mentorId];
+            document.querySelector('#chatArea .font-semibold').innerHTML = 
+                `${mentor.name} <span class="bg-orange text-navy text-xs px-2 py-0.5 rounded-full ml-1">${
+                    mentorId.includes('group') ? 'Group' : 'Mentor'
+                }</span>`;
+            
+            document.querySelector('#chatArea .w-10').innerHTML = mentor.avatar;
+            
+            // Render each message
+            conversationHistory[mentorId].forEach((msg, index) => {
+                // Skip system messages
+                if (msg.role === 'system') return;
+                
+                // Only display assistant and user messages
+                if (index > 0 || mentorId === 'sarah') { // Show first message only for Sarah
+                    addMessageToUI(msg.content, msg.role === 'user');
+                }
+            });
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Add a message to the UI
+        function addMessageToUI(content, isUser) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `mb-4 flex flex-col items-${isUser ? 'end' : 'start'}`;
+            messageDiv.innerHTML = `
+                <div class="${isUser ? 'bg-orange text-navy' : 'bg-white text-navy'} max-w-xs md:max-w-md lg:max-w-lg rounded-${
+                    isUser ? 'l' : 'r'
+                }-xl rounded-b${isUser ? 'r' : 'l'}-xl px-4 py-2 shadow">${content}</div>
+                <span class="text-xs text-white mt-1">${timeString}</span>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Send a message to the current mentor
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to UI
+            addMessageToUI(message, true);
+            
+            // Add to conversation history
+            conversationHistory[currentMentor].push({
+                role: 'user',
+                content: message
+            });
+            
+            // Clear input
+            messageInput.value = '';
+            
+            // Show typing indicator
+            typingIndicator.classList.remove('hidden');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            try {
+                // Get AI response
+                const aiResponse = await getAIResponse(currentMentor);
+                
+                // Add AI response to UI
+                addMessageToUI(aiResponse, false);
+                
+                // Add to conversation history
+                conversationHistory[currentMentor].push({
+                    role: 'assistant',
+                    content: aiResponse
+                });
+            } catch (error) {
+                console.error('Error getting AI response:', error);
+                addMessageToUI("Sorry, I'm having trouble responding right now. Please try again later.", false);
+            } finally {
+                // Hide typing indicator
+                typingIndicator.classList.add('hidden');
+            }
+        }
+
+        // Get response from OpenAI API
+        async function getAIResponse(mentorId) {
+            const mentor = mentors[mentorId];
+            
+            // Prepare messages for API
+            const messages = [
+                { role: "system", content: mentor.prompt },
+                ...conversationHistory[mentorId].filter(msg => msg.role !== 'system')
+            ];
+            
+            // In a real implementation, you would call your backend API here
+            // which would then call the OpenAI API with your secure API key
+            // This is a mock implementation for demonstration
+            
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Mock responses based on mentor type
+            const lastUserMessage = conversationHistory[mentorId][conversationHistory[mentorId].length - 1].content.toLowerCase();
+            
+            if (mentorId === 'sarah') {
+                if (lastUserMessage.includes('resume')) {
+                    return "When tailoring your resume for tech jobs, focus on quantifying achievements. For example: 'Optimized database queries reducing API response time by 40%' is stronger than 'Worked with databases'. Do you have a specific role you're targeting?";
+                } else if (lastUserMessage.includes('interview')) {
+                    return "For tech interviews, I recommend preparing 3-5 strong accomplishment stories using the STAR method (Situation, Task, Action, Result). Would you like to practice one now?";
+                } else {
+                    return "That's an interesting point. To help you best, could you share more details about your specific situation or what you've tried so far?";
+                }
+            } else if (mentorId === 'michael') {
+                if (lastUserMessage.includes('algorithm') || lastUserMessage.includes('data structure')) {
+                    return "When preparing for algorithm questions, I recommend focusing on pattern recognition. Most problems fall into categories like two pointers, sliding window, or DFS/BFS. Would you like to work through a practice problem together?";
+                } else {
+                    return "For technical interviews, remember to think aloud as you solve problems. Interviewers want to understand your thought process. Would you like to do a mock interview question now?";
+                }
+            } else if (mentorId === 'priya') {
+                if (lastUserMessage.includes('linkedin') || lastUserMessage.includes('profile')) {
+                    return "Your LinkedIn should tell a clear career story. Use the headline for your value proposition (not just job title), and the About section to showcase your unique strengths. Would you like me to review your profile?";
+                } else {
+                    return "Effective networking starts with giving value first. Before asking for help, research the person and think how you might help them. What specific networking goals are you working toward?";
+                }
+            } else if (mentorId.includes('group')) {
+                return "That's a great discussion topic! I'd suggest everyone reflect on their own experiences with this challenge. Who would like to share their perspective first?";
+            } else {
+                return "Thanks for your message! I'm reviewing your question and will provide a thoughtful response shortly.";
+            }
+            
+            // In a real implementation, you would use:
+            /*
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    messages: messages,
+                    mentor: mentorId
+                })
+            });
+            
+            const data = await response.json();
+            return data.reply;
+            */
+        }
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
