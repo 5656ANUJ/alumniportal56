@@ -75,6 +75,7 @@
     .learn-more-section-active {
       display: block;
     }
+    
   </style>
 </head>
 
@@ -711,32 +712,29 @@
       }
     });
     
-    // Learn More section toggle
+    // Learn More section toggle - updated to only work with the Learn More button
     const learnMoreSection = document.getElementById('learn-more');
-    const sidebarLinks = document.querySelectorAll('aside nav a');
+    const learnMoreButton = document.querySelector('a[href="#learn-more"]');
     
-    sidebarLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        if (link.getAttribute('href') === '#learn-more') {
-          e.preventDefault();
-          learnMoreSection.classList.toggle('learn-more-section-active');
-          
-          // Scroll to the section
-          learnMoreSection.scrollIntoView({ behavior: 'smooth' });
-          
-          // Hide other sections if needed
-          document.querySelectorAll('main > section').forEach(section => {
-            if (section.id !== 'learn-more') {
-              section.style.display = 'none';
-            }
-          });
-        } else {
-          learnMoreSection.classList.remove('learn-more-section-active');
-          document.querySelectorAll('main > section').forEach(section => {
-            section.style.display = 'block';
-          });
-        }
-      });
+    learnMoreButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Toggle the visibility of the Learn More section
+      learnMoreSection.classList.toggle('learn-more-section-active');
+      
+      // Hide all other main sections when Learn More is active
+      const mainSections = document.querySelectorAll('main > section:not(#learn-more)');
+      if (learnMoreSection.classList.contains('learn-more-section-active')) {
+        mainSections.forEach(section => {
+          section.style.display = 'none';
+        });
+      } else {
+        mainSections.forEach(section => {
+          section.style.display = 'block';
+        });
+      }
+      
+      // Scroll to the section
+      learnMoreSection.scrollIntoView({ behavior: 'smooth' });
     });
     
     // Collapse sidebar on larger screens if needed
