@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Schedule Dashboard</title>
+    <title>Mentor Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .current-class {
+        .current-session {
             background-color: #FCA311;
             color: white;
         }
@@ -25,7 +25,7 @@
     <div class="container mx-auto p-4 max-w-6xl">
         <!-- Top Navigation Bar -->
         <div class="bg-white rounded-lg shadow-md p-4 mb-6">
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">Student Schedule</h1>
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">Mentor Dashboard</h1>
             
             <!-- Monthly Calendar -->
             <div class="flex justify-between mb-4 overflow-x-auto">
@@ -43,183 +43,273 @@
             
             <!-- Weekly Day Picker -->
             <div class="flex justify-between overflow-x-auto">
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Mon 1</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Tue 2</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Wed 3</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Thu 4</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Fri 5</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sat 6</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sun 7</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Mon 8</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full current-day">Tue 9</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Wed 10</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Thu 11</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Fri 12</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sat 13</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sun 14</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Mon 15</div>
-                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Tue 16</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-01">Mon 1</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-02">Tue 2</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-03">Wed 3</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-04">Thu 4</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-05">Fri 5</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-06">Sat 6</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-07">Sun 7</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-08">Mon 8</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full current-day" data-date="2023-03-09">Tue 9</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-10">Wed 10</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-11">Thu 11</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-12">Fri 12</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-13">Sat 13</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-14">Sun 14</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-15">Mon 15</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full" data-date="2023-03-16">Tue 16</div>
             </div>
         </div>
         
         <div class="flex flex-col md:flex-row gap-6">
             <!-- Left Panel - Daily Schedule -->
             <div class="bg-white rounded-lg shadow-md p-6 flex-1">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">March 9, Tuesday</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4" id="current-date">March 9, Tuesday</h2>
                 
-                <div class="space-y-4">
-                    <!-- Class Item -->
-                    <div class="class-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">08:15 - 09:00</span>
-                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">Upcoming</span>
-                        </div>
-                        <h3 class="text-lg font-medium mt-1">Mathematics</h3>
-                        <p class="text-gray-600">Mrs. Thomas</p>
-                    </div>
-                    
-                    <!-- Current Class Item -->
-                    <div class="class-item p-4 border border-gray-200 rounded-lg current-class hover:shadow-md transition">
-                        <div class="flex justify-between items-center">
-                            <span class="text-white">09:00 - 10:00</span>
-                            <span class="text-sm bg-white text-orange-600 px-2 py-1 rounded">In Progress</span>
-                        </div>
-                        <h3 class="text-lg font-medium mt-1 text-white">Chemistry</h3>
-                        <p class="text-white">Dr. Bennett</p>
-                    </div>
-                    
-                    <!-- Class Item -->
-                    <div class="class-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">10:00 - 10:45</span>
-                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">Online</span>
-                        </div>
-                        <h3 class="text-lg font-medium mt-1">Chemistry</h3>
-                        <p class="text-gray-600">Dr. Bennett</p>
-                        <p class="text-sm text-gray-500 mt-1">Online lesson</p>
-                    </div>
-                    
-                    <!-- Class Item -->
-                    <div class="class-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">10:25 - 11:10</span>
-                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">Later</span>
-                        </div>
-                        <h3 class="text-lg font-medium mt-1">Literature</h3>
-                        <p class="text-gray-600">Mrs. Davis</p>
-                    </div>
+                <div class="space-y-4" id="schedule-container">
+                    <!-- Schedule items will be loaded here -->
                 </div>
             </div>
             
-            <!-- Right Panel - Class Details -->
+            <!-- Right Panel - Session Details -->
             <div class="bg-white rounded-lg shadow-md p-6 w-full md:w-96">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Class Details</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Session Details</h2>
                 
-                <div class="space-y-6">
-                    <div>
-                        <h3 class="text-lg font-medium">Chemistry</h3>
-                        <p class="text-gray-600">Dr. Bennett</p>
+                <div class="space-y-6" id="session-details">
+                    <div class="text-center py-10 text-gray-500">
+                        <i class="fas fa-calendar-alt text-4xl mb-2"></i>
+                        <p>Select a session to view details</p>
                     </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-blue-100 p-3 rounded-full">
-                            <i class="fas fa-clock text-blue-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-gray-600">Time</p>
-                            <p class="font-medium">09:00 - 10:00</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-blue-100 p-3 rounded-full">
-                            <i class="fas fa-laptop-house text-blue-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-gray-600">Format</p>
-                            <p class="font-medium">In-Person</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-100 p-4 rounded-lg">
-                        <p class="text-gray-600 mb-2">Time remaining:</p>
-                        <p class="text-2xl font-bold" id="countdown">35:22</p>
-                    </div>
-                    
-                    <div>
-                        <p class="text-gray-600 mb-2">Participants:</p>
-                        <div class="flex items-center">
-                            <div class="flex -space-x-2">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Student">
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-medium">+12</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button id="joinButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition flex items-center justify-center space-x-2">
-                        <i class="fas fa-video"></i>
-                        <span>Join the Lesson</span>
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Update countdown timer
-        function updateCountdown() {
-            // Set the end time to 10:00 (1 hour from now for demo)
-            const now = new Date();
-            const endTime = new Date(now);
-            endTime.setHours(now.getHours() + 1);
+        // Sample data for mentor sessions
+        const sessionsData = {
+            '2023-03-09': [
+                {
+                    id: 1,
+                    time: '08:15 - 09:00',
+                    student: 'Alex Johnson',
+                    topic: 'Career Guidance',
+                    format: 'In-Person',
+                    status: 'upcoming'
+                },
+                {
+                    id: 2,
+                    time: '09:00 - 10:00',
+                    student: 'Sarah Williams',
+                    topic: 'Project Review',
+                    format: 'Online',
+                    status: 'current'
+                },
+                {
+                    id: 3,
+                    time: '10:00 - 10:45',
+                    student: 'Michael Brown',
+                    topic: 'Skill Development',
+                    format: 'Online',
+                    status: 'later'
+                },
+                {
+                    id: 4,
+                    time: '10:25 - 11:10',
+                    student: 'Emma Davis',
+                    topic: 'Academic Advice',
+                    format: 'In-Person',
+                    status: 'later'
+                }
+            ],
+            '2023-03-10': [
+                {
+                    id: 5,
+                    time: '09:30 - 10:15',
+                    student: 'David Miller',
+                    topic: 'Resume Workshop',
+                    format: 'Online',
+                    status: 'upcoming'
+                },
+                {
+                    id: 6,
+                    time: '11:00 - 11:45',
+                    student: 'Olivia Wilson',
+                    topic: 'Interview Prep',
+                    format: 'In-Person',
+                    status: 'later'
+                }
+            ],
+            '2023-03-11': [
+                {
+                    id: 7,
+                    time: '14:00 - 15:00',
+                    student: 'James Taylor',
+                    topic: 'Portfolio Review',
+                    format: 'Online',
+                    status: 'upcoming'
+                }
+            ]
+        };
+
+        // Current date management
+        let currentDate = '2023-03-09';
+        let currentSessionId = null;
+        
+        // Format date display
+        function formatDateDisplay(dateStr) {
+            const date = new Date(dateStr);
+            const options = { month: 'long', day: 'numeric', weekday: 'long' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        // Load schedule for a specific date
+        function loadSchedule(date) {
+            currentDate = date;
+            const dateDisplay = formatDateDisplay(date);
+            document.getElementById('current-date').textContent = dateDisplay;
             
-            const diff = endTime - now;
+            const scheduleContainer = document.getElementById('schedule-container');
+            scheduleContainer.innerHTML = '';
             
-            if (diff <= 0) {
-                document.getElementById('countdown').textContent = "Class ended";
-                return;
+            if (sessionsData[date]) {
+                sessionsData[date].forEach(session => {
+                    const isCurrentSession = session.id === currentSessionId;
+                    const statusClass = session.status === 'current' && !currentSessionId ? 'current-session' : 
+                                      isCurrentSession ? 'current-session' : 'border-gray-200';
+                    const statusText = session.status === 'current' ? 'In Progress' : 
+                                     session.status === 'upcoming' ? 'Upcoming' : 'Later';
+                    
+                    const sessionElement = document.createElement('div');
+                    sessionElement.className = `session-item p-4 border rounded-lg hover:shadow-md transition cursor-pointer ${statusClass}`;
+                    sessionElement.dataset.id = session.id;
+                    sessionElement.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <span class="${isCurrentSession || (session.status === 'current' && !currentSessionId) ? 'text-white' : 'text-gray-600'}">${session.time}</span>
+                            <span class="text-sm ${isCurrentSession || (session.status === 'current' && !currentSessionId) ? 'bg-white text-orange-600' : 'bg-blue-100 text-blue-800'} px-2 py-1 rounded">${statusText}</span>
+                        </div>
+                        <h3 class="text-lg font-medium mt-1 ${isCurrentSession || (session.status === 'current' && !currentSessionId) ? 'text-white' : 'text-gray-800'}">${session.student}</h3>
+                        <p class="${isCurrentSession || (session.status === 'current' && !currentSessionId) ? 'text-white' : 'text-gray-600'}">${session.topic}</p>
+                    `;
+                    
+                    sessionElement.addEventListener('click', () => {
+                        currentSessionId = session.id;
+                        loadSessionDetails(session.id);
+                        loadSchedule(currentDate); // Reload to update highlights
+                    });
+                    scheduleContainer.appendChild(sessionElement);
+                });
+            } else {
+                scheduleContainer.innerHTML = `
+                    <div class="text-center py-10 text-gray-500">
+                        <i class="fas fa-calendar-plus text-4xl mb-2"></i>
+                        <p>No sessions scheduled for this day</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Load session details
+        function loadSessionDetails(sessionId) {
+            let session = null;
+            
+            // Find the session in our data
+            for (const date in sessionsData) {
+                const foundSession = sessionsData[date].find(s => s.id === sessionId);
+                if (foundSession) {
+                    session = foundSession;
+                    break;
+                }
             }
             
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            if (!session) return;
             
-            document.getElementById('countdown').textContent = 
-                `${Math.floor(minutes)}:${seconds < 10 ? '0' : ''}${seconds}`;
+            const sessionDetails = document.getElementById('session-details');
+            sessionDetails.innerHTML = `
+                <div>
+                    <h3 class="text-lg font-medium">${session.student}</h3>
+                    <p class="text-gray-600">${session.topic}</p>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-clock text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-600">Time</p>
+                        <p class="font-medium">${session.time}</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas ${session.format === 'Online' ? 'fa-laptop-house' : 'fa-user'} text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-600">Format</p>
+                        <p class="font-medium">${session.format}</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-100 p-4 rounded-lg">
+                    <p class="text-gray-600 mb-2">Time remaining:</p>
+                    <p class="text-2xl font-bold" id="countdown">${session.status === 'current' ? '45:22' : session.status === 'upcoming' ? 'Starts soon' : 'Not started'}</p>
+                </div>
+                
+                <div>
+                    <p class="text-gray-600 mb-2">Participant:</p>
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/${session.student.includes('Alex') || session.student.includes('David') || session.student.includes('James') || session.student.includes('Michael') ? 'men/32.jpg' : 'women/44.jpg'}" alt="Student">
+                        <span class="ml-2 font-medium">${session.student}</span>
+                    </div>
+                </div>
+                
+                <button id="joinButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition flex items-center justify-center space-x-2">
+                    <i class="fas fa-video"></i>
+                    <span>Start Session</span>
+                </button>
+            `;
+            
+            // Add event listener to the join button
+            document.getElementById('joinButton').addEventListener('click', function() {
+                alert(`Starting session with ${session.student}...`);
+            });
+        }
+        
+        // Update countdown timer
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            if (!countdownElement) return;
+            
+            // Demo countdown for current sessions
+            if (countdownElement.textContent.includes(':')) {
+                const parts = countdownElement.textContent.split(':');
+                let minutes = parseInt(parts[0]);
+                let seconds = parseInt(parts[1]);
+                
+                if (seconds > 0) {
+                    seconds--;
+                } else {
+                    if (minutes > 0) {
+                        minutes--;
+                        seconds = 59;
+                    }
+                }
+                
+                countdownElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
         }
         
         // Update countdown every second
         setInterval(updateCountdown, 1000);
-        updateCountdown();
-        
-        // Handle class item clicks
-        document.querySelectorAll('.class-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.class-item').forEach(i => {
-                    i.classList.remove('current-class');
-                    i.classList.add('border-gray-200');
-                    i.querySelectorAll('span, h3, p').forEach(el => {
-                        el.classList.remove('text-white');
-                        el.classList.add('text-gray-600');
-                    });
-                });
-                
-                this.classList.add('current-class');
-                this.classList.remove('border-gray-200');
-                this.querySelectorAll('span, h3, p').forEach(el => {
-                    el.classList.add('text-white');
-                    el.classList.remove('text-gray-600');
-                });
-                
-                // Update right panel with selected class details
-                // In a real app, this would fetch actual data
-            });
-        });
         
         // Handle day tab clicks
         document.querySelectorAll('.day-tab').forEach(tab => {
             tab.addEventListener('click', function() {
+                const date = this.dataset.date;
+                currentSessionId = null; // Reset selected session when changing days
+                
                 document.querySelectorAll('.day-tab').forEach(t => {
                     t.classList.remove('current-day');
                     t.classList.remove('bg-gray-800');
@@ -230,8 +320,13 @@
                 this.classList.add('bg-gray-800');
                 this.classList.add('text-white');
                 
-                // Update schedule for selected day
-                // In a real app, this would fetch the schedule for the selected date
+                loadSchedule(date);
+                document.getElementById('session-details').innerHTML = `
+                    <div class="text-center py-10 text-gray-500">
+                        <i class="fas fa-calendar-alt text-4xl mb-2"></i>
+                        <p>Select a session to view details</p>
+                    </div>
+                `;
             });
         });
         
@@ -247,17 +342,11 @@
                 this.classList.add('current-month');
                 this.classList.add('font-bold');
                 this.classList.add('text-gray-800');
-                
-                // Update calendar for selected month
-                // In a real app, this would show the days for the selected month
             });
         });
         
-        // Handle join button click
-        document.getElementById('joinButton').addEventListener('click', function() {
-            alert('Joining the lesson... Redirecting to Zoom/Teams.');
-            // In a real app, this would open the meeting link
-        });
+        // Initialize with current date
+        loadSchedule(currentDate);
     </script>
 </body>
 </html>
