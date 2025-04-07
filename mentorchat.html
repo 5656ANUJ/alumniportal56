@@ -15,7 +15,7 @@
         @media (min-width: 768px) {
             .chat-container {
                 height: 100vh;
-                grid-template-columns: 320px 1fr;
+                grid-template-columns: 380px 1fr;
             }
         }
         .messages-container {
@@ -64,12 +64,71 @@
             from { transform: translateX(0); }
             to { transform: translateX(-100%); }
         }
+        .bg-whatsapp {
+            background-color: #e5e5e5;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d1d1d1' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .message-sent {
+            background-color: #FCA311;
+            color: #000000;
+            border-radius: 18px 18px 0 18px;
+        }
+        .message-received {
+            background-color: #FFFFFF;
+            color: #000000;
+            border-radius: 18px 18px 18px 0;
+        }
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #4ade80;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border: 2px solid #14213D;
+        }
+        .offline-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #9ca3af;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border: 2px solid #14213D;
+        }
+        .chat-list-item:hover {
+            background-color: #f3f4f6;
+        }
+        .active-chat {
+            background-color: #e5e7eb;
+        }
+        .call-button {
+            background-color: #FCA311;
+            color: #000000;
+        }
+        .meeting-button {
+            background-color: #14213D;
+            color: #FFFFFF;
+        }
+        .search-input {
+            background-color: #f3f4f6;
+        }
+        .chat-header {
+            background-color: #14213D;
+            color: #FFFFFF;
+        }
+        .sidebar {
+            background-color: #FFFFFF;
+            border-right: 1px solid #e5e7eb;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
-    <div class="chat-container grid grid-rows-[auto_1fr_auto] md:grid-rows-1 md:grid-cols-[320px_1fr] overflow-hidden">
+    <div class="chat-container grid grid-rows-[auto_1fr_auto] md:grid-rows-1 md:grid-cols-[380px_1fr] overflow-hidden">
         <!-- Mobile Header -->
-        <header class="bg-indigo-600 text-white p-4 flex items-center justify-between md:hidden">
+        <header class="chat-header p-4 flex items-center justify-between md:hidden">
             <button id="menuToggle" class="text-white">
                 <i class="fas fa-bars text-xl"></i>
             </button>
@@ -78,24 +137,26 @@
         </header>
 
         <!-- Sidebar - Chat List -->
-        <aside id="sidebar" class="bg-white border-r border-gray-200 absolute md:relative inset-y-0 left-0 z-10 w-full md:w-auto md:block transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <aside id="sidebar" class="sidebar absolute md:relative inset-y-0 left-0 z-10 w-full md:w-auto md:block transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
             <div class="h-full flex flex-col">
                 <!-- Sidebar Header -->
-                <div class="p-4 border-b border-gray-200 flex items-center justify-between">
-                    <h2 class="text-lg font-semibold">Chats</h2>
-                    <button class="md:hidden text-gray-500 hover:text-gray-700" id="closeSidebar">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <!-- Tabs -->
-                <div class="flex border-b border-gray-200">
-                    <button class="flex-1 py-3 font-medium text-indigo-600 border-b-2 border-indigo-600">
-                        Messages <span class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full ml-1">4</span>
-                    </button>
-                    <button class="flex-1 py-3 font-medium text-gray-500 hover:text-gray-700">
-                        Notifications
-                    </button>
+                <div class="p-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-semibold text-gray-800">Chats</h2>
+                        <div class="flex space-x-3">
+                            <button class="text-gray-600 hover:text-gray-800">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <button class="md:hidden text-gray-600 hover:text-gray-800" id="closeSidebar">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search or start new chat" class="search-input w-full py-2 px-4 pl-10 rounded-lg focus:outline-none">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                    </div>
                 </div>
                 
                 <!-- Chat List -->
@@ -106,54 +167,133 @@
         </aside>
 
         <!-- Main Chat Area -->
-        <main class="bg-gray-50 flex flex-col h-full">
-            <!-- Chat Header -->
-            <div class="bg-white border-b border-gray-200 p-4 flex items-center">
-                <button id="backButton" class="mr-3 text-gray-500 hover:text-gray-700 md:hidden">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <div class="flex items-center flex-1">
-                    <div class="relative">
-                        <div id="currentChatAvatar" class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">AS</div>
-                        <div id="currentChatStatus" class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-gray-400 rounded-full border-2 border-white"></div>
+        <main class="bg-whatsapp flex flex-col h-full">
+            <!-- No Chat Selected View -->
+            <div id="noChatSelected" class="h-full flex flex-col items-center justify-center text-gray-500 bg-gray-100">
+                <div class="bg-white p-8 rounded-lg shadow-lg text-center max-w-md mx-4">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-comments text-2xl text-gray-400"></i>
                     </div>
-                    <div class="ml-3">
-                        <h2 id="currentChatName" class="font-medium">Select a chat</h2>
-                        <p id="currentChatStatusText" class="text-xs text-gray-500">Offline</p>
-                    </div>
-                </div>
-                <div class="flex space-x-4">
-                    <button class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-video"></i>
-                    </button>
-                    <button class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-phone"></i>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">Welcome to Mentor Chat</h2>
+                    <p class="text-gray-600 mb-6">Select a chat to start messaging or schedule a meeting with your mentor/mentee.</p>
+                    <button id="newMeetingBtn" class="meeting-button px-4 py-2 rounded-lg font-medium flex items-center mx-auto">
+                        <i class="fas fa-calendar-plus mr-2"></i> Schedule Meeting
                     </button>
                 </div>
             </div>
             
-            <!-- Messages Area -->
-            <div id="messagesContainer" class="messages-container overflow-y-auto p-4 scrollbar-hidden">
-                <div id="noChatSelected" class="h-full flex flex-col items-center justify-center text-gray-400">
-                    <i class="fas fa-comments text-4xl mb-4"></i>
-                    <p class="text-lg">Select a chat to start messaging</p>
+            <!-- Chat View (hidden by default) -->
+            <div id="chatView" class="h-full flex flex-col hidden">
+                <!-- Chat Header -->
+                <div class="chat-header p-3 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <button id="backButton" class="mr-3 text-white hover:text-gray-200 md:hidden">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="relative">
+                            <div id="currentChatAvatar" class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-bold"></div>
+                            <div id="currentChatStatus" class="offline-dot"></div>
+                        </div>
+                        <div class="ml-3">
+                            <h2 id="currentChatName" class="font-medium text-white">Select a chat</h2>
+                            <p id="currentChatStatusText" class="text-xs text-gray-300">Offline</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button id="voiceCallBtn" class="text-white hover:text-gray-200">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button id="videoCallBtn" class="text-white hover:text-gray-200">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button id="scheduleMeetingBtn" class="text-white hover:text-gray-200">
+                            <i class="fas fa-calendar-alt"></i>
+                        </button>
+                    </div>
                 </div>
-                <!-- Messages will be populated here -->
-            </div>
-            
-            <!-- Message Input -->
-            <div id="messageInputContainer" class="bg-white border-t border-gray-200 p-4 hidden">
-                <div class="flex items-center bg-gray-100 rounded-full px-4">
-                    <button class="text-gray-500 hover:text-gray-700 mr-2">
-                        <i class="far fa-smile"></i>
-                    </button>
-                    <input type="text" id="messageInput" placeholder="Type a message..." class="flex-1 bg-transparent border-none focus:ring-0 py-3">
-                    <div class="flex items-center space-x-2 ml-2">
-                        <button class="text-gray-500 hover:text-gray-700">
+                
+                <!-- Messages Area -->
+                <div id="messagesContainer" class="messages-container overflow-y-auto p-4 scrollbar-hidden">
+                    <!-- Messages will be populated here -->
+                </div>
+                
+                <!-- Message Input -->
+                <div class="bg-white border-t border-gray-200 p-3">
+                    <div class="flex items-center">
+                        <button class="text-gray-500 hover:text-gray-700 mx-2">
                             <i class="fas fa-paperclip"></i>
                         </button>
-                        <button id="sendButton" class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white">
-                            <i class="fas fa-paper-plane text-sm"></i>
+                        <div class="flex-1 bg-white rounded-full px-4 border border-gray-300 flex items-center">
+                            <button class="text-gray-500 hover:text-gray-700 mr-2">
+                                <i class="far fa-smile"></i>
+                            </button>
+                            <input type="text" id="messageInput" placeholder="Type a message..." class="flex-1 bg-transparent border-none focus:ring-0 py-2 focus:outline-none">
+                            <button class="text-gray-500 hover:text-gray-700 ml-2">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                        <button id="sendButton" class="w-10 h-10 rounded-full call-button flex items-center justify-center ml-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Call Modal -->
+            <div id="callModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center hidden">
+                <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                    <div class="text-center mb-6">
+                        <div id="callAvatar" class="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-2xl font-bold mx-auto mb-4"></div>
+                        <h3 id="callTitle" class="text-xl font-semibold mb-1">Calling...</h3>
+                        <p id="callStatus" class="text-gray-600">Connecting</p>
+                    </div>
+                    <div class="flex justify-center space-x-6 mb-6">
+                        <button class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fas fa-microphone-slash text-gray-600"></i>
+                        </button>
+                        <button id="endCallBtn" class="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center">
+                            <i class="fas fa-phone text-white"></i>
+                        </button>
+                        <button class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+                            <i class="fas fa-volume-up text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Meeting Modal -->
+            <div id="meetingModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center hidden">
+                <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Schedule Meeting</h3>
+                        <button id="closeMeetingModal" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                            <input type="text" id="meetingTitle" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date & Time</label>
+                            <input type="datetime-local" id="meetingDateTime" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Duration (minutes)</label>
+                            <select id="meetingDuration" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">60 minutes</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
+                            <textarea id="meetingDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                        </div>
+                        <button id="confirmMeetingBtn" class="w-full meeting-button py-2 rounded-md font-medium mt-4">
+                            Schedule Meeting
                         </button>
                     </div>
                 </div>
@@ -171,13 +311,25 @@
             const chatList = document.getElementById('chatList');
             const messagesContainer = document.getElementById('messagesContainer');
             const noChatSelected = document.getElementById('noChatSelected');
-            const messageInputContainer = document.getElementById('messageInputContainer');
+            const chatView = document.getElementById('chatView');
             const messageInput = document.getElementById('messageInput');
             const sendButton = document.getElementById('sendButton');
             const currentChatName = document.getElementById('currentChatName');
             const currentChatAvatar = document.getElementById('currentChatAvatar');
             const currentChatStatus = document.getElementById('currentChatStatus');
             const currentChatStatusText = document.getElementById('currentChatStatusText');
+            const voiceCallBtn = document.getElementById('voiceCallBtn');
+            const videoCallBtn = document.getElementById('videoCallBtn');
+            const scheduleMeetingBtn = document.getElementById('scheduleMeetingBtn');
+            const newMeetingBtn = document.getElementById('newMeetingBtn');
+            const callModal = document.getElementById('callModal');
+            const callTitle = document.getElementById('callTitle');
+            const callStatus = document.getElementById('callStatus');
+            const callAvatar = document.getElementById('callAvatar');
+            const endCallBtn = document.getElementById('endCallBtn');
+            const meetingModal = document.getElementById('meetingModal');
+            const closeMeetingModal = document.getElementById('closeMeetingModal');
+            const confirmMeetingBtn = document.getElementById('confirmMeetingBtn');
 
             // Sample Data
             const students = [
@@ -185,54 +337,63 @@
                     id: 1,
                     name: "Anita Sutana",
                     avatar: "AS",
-                    color: "indigo",
+                    color: "bg-indigo-500",
                     online: false,
                     lastSeen: "2 hours ago",
                     messages: [
-                        { type: "received", text: "Hello Professor, I have a question about the assignment.", time: "10:30 AM" },
+                        { type: "received", text: "Hello Professor, I have a question about the assignment.", time: "10:30 AM", read: true },
                         { type: "sent", text: "Hi Anita, what's your question?", time: "10:32 AM" },
-                        { type: "received", text: "I'm not sure how to implement the blockchain functionality.", time: "10:35 AM" }
+                        { type: "received", text: "I'm not sure how to implement the blockchain functionality.", time: "10:35 AM", read: true },
+                        { type: "sent", text: "Let me explain. First, you need to create the genesis block.", time: "10:37 AM" },
+                        { type: "received", text: "That makes sense. What about the proof-of-work algorithm?", time: "10:40 AM", read: true },
+                        { type: "sent", text: "We'll use SHA-256 hashing. I'll send you some sample code.", time: "10:42 AM" }
                     ]
                 },
                 {
                     id: 2,
                     name: "Arif Hossain",
                     avatar: "AH",
-                    color: "blue",
+                    color: "bg-blue-500",
                     online: true,
                     lastSeen: "Online",
                     messages: [
-                        { type: "received", text: "Professor, when can we meet to discuss my research?", time: "9:15 AM" }
+                        { type: "received", text: "Professor, when can we meet to discuss my research?", time: "9:15 AM", read: true },
+                        { type: "sent", text: "How about tomorrow at 2pm?", time: "9:20 AM" },
+                        { type: "received", text: "That works for me. Should I prepare anything?", time: "9:22 AM", read: false }
                     ]
                 },
                 {
                     id: 3,
                     name: "Nobel Hasan",
                     avatar: "NH",
-                    color: "green",
+                    color: "bg-green-500",
                     online: false,
                     lastSeen: "Yesterday",
                     messages: [
                         { type: "sent", text: "Did you review the materials I sent?", time: "3:45 PM" },
-                        { type: "received", text: "Yes, they were very helpful!", time: "4:30 PM" }
+                        { type: "received", text: "Yes, they were very helpful!", time: "4:30 PM", read: true },
+                        { type: "sent", text: "Great! Let me know if you have any questions.", time: "4:32 PM" }
                     ]
                 },
                 {
                     id: 4,
                     name: "Robert Hasan",
                     avatar: "RH",
-                    color: "purple",
+                    color: "bg-purple-500",
                     online: true,
                     lastSeen: "Online",
                     messages: [
-                        { type: "received", text: "Good morning! About the internship opportunity...", time: "8:30 AM" }
+                        { type: "received", text: "Good morning! About the internship opportunity...", time: "8:30 AM", read: true },
+                        { type: "sent", text: "Yes, the application deadline is next Friday.", time: "8:35 AM" },
+                        { type: "received", text: "Perfect, I'll submit my CV today.", time: "8:37 AM", read: false }
                     ]
                 }
             ];
 
             // State
             let activeChatId = null;
-            let typingIntervals = {};
+            let currentCall = null;
+            let isCallActive = false;
 
             // Toggle Sidebar on Mobile
             menuToggle.addEventListener('click', () => {
@@ -245,8 +406,8 @@
 
             backButton.addEventListener('click', () => {
                 activeChatId = null;
-                noChatSelected.style.display = 'flex';
-                messageInputContainer.style.display = 'none';
+                noChatSelected.classList.remove('hidden');
+                chatView.classList.add('hidden');
                 updateChatHeader();
             });
 
@@ -258,22 +419,22 @@
                     const unreadCount = student.messages.filter(msg => msg.type === 'received' && !msg.read).length;
 
                     const chatItem = document.createElement('div');
-                    chatItem.className = 'p-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer';
+                    chatItem.className = `p-3 border-b border-gray-100 cursor-pointer flex items-center ${activeChatId === student.id ? 'active-chat' : ''}`;
                     chatItem.dataset.id = student.id;
                     chatItem.innerHTML = `
-                        <div class="flex items-center">
-                            <div class="relative">
-                                <div class="w-10 h-10 rounded-full bg-${student.color}-500 flex items-center justify-center text-white font-bold">${student.avatar}</div>
-                                <div class="absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-400'} rounded-full border-2 border-white"></div>
+                        <div class="relative flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full ${student.color} flex items-center justify-center text-white font-bold">${student.avatar}</div>
+                            ${student.online ? '<div class="online-dot"></div>' : '<div class="offline-dot"></div>'}
+                        </div>
+                        <div class="ml-3 flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-medium text-gray-900 truncate">${student.name}</h3>
+                                <span class="text-xs ${unreadCount > 0 ? 'text-orange-500 font-semibold' : 'text-gray-500'}">${lastMessage.time}</span>
                             </div>
-                            <div class="ml-3 flex-1">
-                                <div class="flex justify-between items-center">
-                                    <h3 class="font-medium">${student.name}</h3>
-                                    <span class="text-xs text-gray-500">${lastMessage.time}</span>
-                                </div>
-                                <p class="text-sm text-gray-500 truncate">${lastMessage.text}</p>
+                            <div class="flex justify-between items-center">
+                                <p class="text-sm ${unreadCount > 0 ? 'text-gray-900 font-semibold' : 'text-gray-600'} truncate">${lastMessage.type === 'sent' ? 'You: ' : ''}${lastMessage.text}</p>
+                                ${unreadCount > 0 ? `<span class="ml-2 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs">${unreadCount}</span>` : ''}
                             </div>
-                            ${unreadCount > 0 ? `<span class="ml-2 w-5 h-5 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xs">${unreadCount}</span>` : ''}
                         </div>
                     `;
                     chatList.appendChild(chatItem);
@@ -296,41 +457,68 @@
                 activeChatId = studentId;
                 const student = students.find(s => s.id === studentId);
                 
+                // Update UI
+                noChatSelected.classList.add('hidden');
+                chatView.classList.remove('hidden');
+                
                 // Update header
                 currentChatName.textContent = student.name;
                 currentChatAvatar.textContent = student.avatar;
-                currentChatAvatar.className = `w-10 h-10 rounded-full bg-${student.color}-500 flex items-center justify-center text-white font-bold`;
-                currentChatStatus.className = `absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-400'} rounded-full border-2 border-white`;
+                currentChatAvatar.className = `w-10 h-10 rounded-full ${student.color} flex items-center justify-center text-white font-bold`;
+                currentChatStatus.className = student.online ? 'online-dot' : 'offline-dot';
                 currentChatStatusText.textContent = student.online ? 'Online' : `Last seen ${student.lastSeen}`;
-                currentChatStatusText.className = `text-xs ${student.online ? 'text-green-500' : 'text-gray-500'}`;
-                
-                // Show messages
-                noChatSelected.style.display = 'none';
-                messageInputContainer.style.display = 'block';
+                currentChatStatusText.className = `text-xs ${student.online ? 'text-green-400' : 'text-gray-300'}`;
                 
                 // Render messages
                 messagesContainer.innerHTML = '';
                 student.messages.forEach(message => {
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = `flex mb-4 ${message.type === 'sent' ? 'justify-end' : 'justify-start'}`;
-                    
-                    messageDiv.innerHTML = `
-                        <div class="max-w-xs md:max-w-md rounded-lg px-4 py-2 ${message.type === 'sent' ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-200'}">
-                            <p>${message.text}</p>
-                            <p class="text-xs mt-1 ${message.type === 'sent' ? 'text-indigo-100' : 'text-gray-500'}">${message.time}</p>
-                        </div>
-                    `;
-                    messagesContainer.appendChild(messageDiv);
+                    addMessageToChat(message, student);
                 });
                 
                 // Scroll to bottom
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 
                 // Mark messages as read
-                student.messages.forEach(msg => msg.read = true);
+                student.messages.forEach(msg => {
+                    if (msg.type === 'received') msg.read = true;
+                });
                 
                 // Update chat list
                 renderChatList();
+            }
+
+            // Add message to chat
+            function addMessageToChat(message, student) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex mb-4 ${message.type === 'sent' ? 'justify-end' : 'justify-start'}`;
+                
+                // Check if message is a typing indicator
+                if (message.isTyping) {
+                    messageDiv.innerHTML = `
+                        <div class="flex items-center bg-white rounded-full px-4 py-2 shadow">
+                            <div class="typing-indicator flex space-x-1">
+                                <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                                <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                                <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Regular message
+                    messageDiv.innerHTML = `
+                        <div class="max-w-xs md:max-w-md ${message.type === 'sent' ? 'message-sent' : 'message-received'} shadow px-4 py-2 relative">
+                            <p class="break-words">${message.text}</p>
+                            <div class="flex justify-end items-center mt-1 space-x-1">
+                                <span class="text-xs ${message.type === 'sent' ? 'text-gray-700' : 'text-gray-500'}">${message.time}</span>
+                                ${message.type === 'sent' ? 
+                                    `<i class="fas fa-check ${message.read ? 'text-blue-500' : 'text-gray-500'} text-xs"></i>` : 
+                                    ''}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                messagesContainer.appendChild(messageDiv);
             }
 
             // Send Message
@@ -341,35 +529,48 @@
                 const messageText = messageInput.value.trim();
                 
                 // Add sent message
-                student.messages.push({
+                const newMessage = {
                     type: "sent",
                     text: messageText,
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                });
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    read: false
+                };
+                
+                student.messages.push(newMessage);
+                
+                // Add to chat
+                addMessageToChat(newMessage, student);
                 
                 // Clear input
                 messageInput.value = '';
                 
-                // Reload chat
-                loadChat(activeChatId);
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Update chat list
+                renderChatList();
                 
                 // Simulate reply if online
                 if (student.online) {
                     setTimeout(() => {
                         if (activeChatId === student.id) { // Check if still same chat
                             // Show typing indicator
-                            student.messages.push({
+                            const typingMessage = {
                                 type: "received",
                                 text: "...",
                                 time: "typing",
                                 isTyping: true
-                            });
-                            loadChat(activeChatId);
+                            };
+                            
+                            student.messages.push(typingMessage);
+                            addMessageToChat(typingMessage, student);
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
                             
                             // Send actual reply after delay
                             setTimeout(() => {
                                 // Remove typing indicator
                                 student.messages = student.messages.filter(m => !m.isTyping);
+                                messagesContainer.removeChild(messagesContainer.lastChild);
                                 
                                 // Add reply
                                 const replies = [
@@ -377,21 +578,161 @@
                                     "I'll get back to you soon.",
                                     "That's helpful, thanks!",
                                     "Can we discuss this tomorrow?",
-                                    "I appreciate your quick response."
+                                    "I appreciate your quick response.",
+                                    "Let me think about that and get back to you.",
+                                    "That's an interesting point.",
+                                    "I'll need to research that further.",
+                                    "Have you checked the documentation?",
+                                    "Could you explain that in more detail?"
                                 ];
                                 const reply = replies[Math.floor(Math.random() * replies.length)];
                                 
-                                student.messages.push({
+                                const receivedMessage = {
                                     type: "received",
                                     text: reply,
-                                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                                });
+                                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                                    read: false
+                                };
                                 
-                                loadChat(activeChatId);
+                                student.messages.push(receivedMessage);
+                                addMessageToChat(receivedMessage, student);
+                                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                                
+                                // Update chat list
+                                renderChatList();
                             }, 1500 + Math.random() * 1500);
                         }
                     }, 500 + Math.random() * 1000);
                 }
+            }
+
+            // Start a call
+            function startCall(isVideo) {
+                if (!activeChatId) return;
+                
+                const student = students.find(s => s.id === activeChatId);
+                currentCall = {
+                    studentId: student.id,
+                    isVideo: isVideo,
+                    connected: false
+                };
+                
+                // Update modal
+                callTitle.textContent = isVideo ? `Video Call with ${student.name}` : `Voice Call with ${student.name}`;
+                callStatus.textContent = "Calling...";
+                callAvatar.textContent = student.avatar;
+                callAvatar.className = `w-20 h-20 rounded-full ${student.color} flex items-center justify-center text-2xl font-bold mx-auto mb-4`;
+                
+                // Show modal
+                callModal.classList.remove('hidden');
+                
+                // Simulate call connection
+                setTimeout(() => {
+                    if (currentCall) { // Check if call wasn't ended
+                        currentCall.connected = true;
+                        callStatus.textContent = "Connected";
+                        
+                        // Simulate call duration timer
+                        let seconds = 0;
+                        const callTimer = setInterval(() => {
+                            if (!currentCall) {
+                                clearInterval(callTimer);
+                                return;
+                            }
+                            
+                            seconds++;
+                            const minutes = Math.floor(seconds / 60);
+                            const remainingSeconds = seconds % 60;
+                            callStatus.textContent = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+                        }, 1000);
+                    }
+                }, 2000 + Math.random() * 3000);
+            }
+
+            // End current call
+            function endCall() {
+                if (!currentCall) return;
+                
+                // Hide modal
+                callModal.classList.add('hidden');
+                
+                // Add call log to messages
+                const student = students.find(s => s.id === currentCall.studentId);
+                const callType = currentCall.isVideo ? "Video" : "Voice";
+                const callDuration = Math.floor(Math.random() * 5) + 1; // Random duration 1-5 minutes
+                
+                student.messages.push({
+                    type: "system",
+                    text: `${callType} call - ${callDuration} min`,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    isCall: true
+                });
+                
+                // Reload chat if it's the active one
+                if (activeChatId === currentCall.studentId) {
+                    loadChat(activeChatId);
+                } else {
+                    renderChatList();
+                }
+                
+                currentCall = null;
+            }
+
+            // Schedule a meeting
+            function scheduleMeeting() {
+                // Show meeting modal
+                meetingModal.classList.remove('hidden');
+            }
+
+            // Confirm meeting
+            function confirmMeeting() {
+                const title = document.getElementById('meetingTitle').value;
+                const dateTime = document.getElementById('meetingDateTime').value;
+                const duration = document.getElementById('meetingDuration').value;
+                const description = document.getElementById('meetingDescription').value;
+                
+                if (!title || !dateTime) {
+                    alert("Please fill in all required fields");
+                    return;
+                }
+                
+                // Format date
+                const date = new Date(dateTime);
+                const formattedDate = date.toLocaleString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                // Add meeting to messages
+                if (activeChatId) {
+                    const student = students.find(s => s.id === activeChatId);
+                    
+                    student.messages.push({
+                        type: "system",
+                        text: `Meeting scheduled: ${title} on ${formattedDate} for ${duration} minutes`,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        isMeeting: true,
+                        meetingDetails: {
+                            title: title,
+                            dateTime: dateTime,
+                            duration: duration,
+                            description: description
+                        }
+                    });
+                    
+                    // Reload chat
+                    loadChat(activeChatId);
+                }
+                
+                // Hide modal and reset form
+                meetingModal.classList.add('hidden');
+                document.getElementById('meetingTitle').value = '';
+                document.getElementById('meetingDateTime').value = '';
+                document.getElementById('meetingDuration').value = '30';
+                document.getElementById('meetingDescription').value = '';
             }
 
             // Event Listeners
@@ -399,6 +740,13 @@
                 if (e.key === 'Enter') sendMessage();
             });
             sendButton.addEventListener('click', sendMessage);
+            voiceCallBtn.addEventListener('click', () => startCall(false));
+            videoCallBtn.addEventListener('click', () => startCall(true));
+            scheduleMeetingBtn.addEventListener('click', scheduleMeeting);
+            newMeetingBtn.addEventListener('click', scheduleMeeting);
+            endCallBtn.addEventListener('click', endCall);
+            closeMeetingModal.addEventListener('click', () => meetingModal.classList.add('hidden'));
+            confirmMeetingBtn.addEventListener('click', confirmMeeting);
 
             // Handle window resize
             function handleResize() {
@@ -429,11 +777,51 @@
                 });
             }, 10000);
 
+            // Simulate receiving new messages
+            setInterval(() => {
+                if (Math.random() > 0.8) { // 20% chance of new message
+                    const randomStudent = students[Math.floor(Math.random() * students.length)];
+                    
+                    // Don't send if this is the active chat (we have typing simulation there)
+                    if (randomStudent.id !== activeChatId && randomStudent.online) {
+                        const messages = [
+                            "Hello, are you available?",
+                            "I have a quick question",
+                            "Can we meet tomorrow?",
+                            "Did you see my last email?",
+                            "I need some help with the project",
+                            "When is the deadline?",
+                            "Could you review my work?",
+                            "Thanks for your help!",
+                            "Are you free for a call?",
+                            "I sent you the documents"
+                        ];
+                        
+                        const newMessage = {
+                            type: "received",
+                            text: messages[Math.floor(Math.random() * messages.length)],
+                            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                            read: false
+                        };
+                        
+                        randomStudent.messages.push(newMessage);
+                        
+                        // Update UI if this is the active chat
+                        if (activeChatId === randomStudent.id) {
+                            addMessageToChat(newMessage, randomStudent);
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        }
+                        
+                        renderChatList();
+                    }
+                }
+            }, 15000);
+
             function updateChatHeader() {
                 if (!activeChatId) {
                     currentChatName.textContent = "Select a chat";
                     currentChatAvatar.textContent = "";
-                    currentChatStatus.className = "absolute bottom-0 right-0 w-2.5 h-2.5 bg-gray-400 rounded-full border-2 border-white";
+                    currentChatStatus.className = "offline-dot";
                     currentChatStatusText.textContent = "Offline";
                     return;
                 }
@@ -441,8 +829,9 @@
                 const student = students.find(s => s.id === activeChatId);
                 currentChatName.textContent = student.name;
                 currentChatAvatar.textContent = student.avatar;
-                currentChatStatus.className = `absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-400'} rounded-full border-2 border-white`;
+                currentChatStatus.className = student.online ? 'online-dot' : 'offline-dot';
                 currentChatStatusText.textContent = student.online ? 'Online' : `Last seen ${student.lastSeen}`;
+                currentChatStatusText.className = `text-xs ${student.online ? 'text-green-400' : 'text-gray-300'}`;
             }
         });
     </script>
