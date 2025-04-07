@@ -35,59 +35,12 @@
             }
         }
     </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 0 10px;
-        }
-        
-        .sidebar-collapsed {
-            width: 80px !important;
-            overflow: hidden;
-        }
-        
-        .sidebar-collapsed .nav-text {
-            display: none;
-        }
-        
-        .sidebar-collapsed .logo-text {
-            display: none;
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 320px;
-            width: 100%;
-        }
-        
-        @media (max-width: 768px) {
-            .chart-container {
-                height: 250px;
-            }
-        }
-    </style>
 </head>
-<body class="bg-lightgray font-sans">
+<body class="bg-gray-100 font-sans">
     <div class="flex h-screen overflow-hidden">
+        <!-- Mobile Sidebar Overlay -->
+        <div id="mobileSidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+        
         <!-- Sidebar -->
         <div id="sidebar" class="hidden md:flex md:flex-shrink-0 transition-all duration-300 bg-navy">
             <div class="flex flex-col w-64 text-white">
@@ -127,6 +80,48 @@
                         <button class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-orange hover:text-navy transition-colors duration-200">
                             <i class="fas fa-chalkboard-teacher mr-3 text-lg"></i>
                             <span class="nav-text">Webinars</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Sidebar -->
+        <div id="mobileSidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-navy transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+            <div class="flex flex-col h-full">
+                <div class="h-16 border-b border-orange flex items-center justify-between px-4">
+                    <div class="logo-container">
+                        <img src="assets/logo mentor hub.png" alt="Mentor Hub Logo" class="h-10 object-contain">
+                    </div>
+                    <button id="closeMobileSidebar" class="text-white hover:text-orange focus:outline-none">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col flex-grow px-2 py-4 overflow-y-auto">
+                    <nav class="flex-1 space-y-1">
+                        <button id="mobileDashboardBtn" class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-md bg-orange text-navy transition-colors duration-200">
+                            <i class="fas fa-home mr-3 text-lg"></i>
+                            <span>Dashboard</span>
+                        </button>
+                        <button id="mobileStudentProfilesBtn" class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-orange hover:text-navy transition-colors duration-200">
+                            <i class="fas fa-user-graduate mr-3 text-lg"></i>
+                            <span>Student Profiles</span>
+                        </button>
+                        <button class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-orange hover:text-navy transition-colors duration-200">
+                            <i class="fas fa-comments mr-3 text-lg"></i>
+                            <span>Chat</span>
+                        </button>
+                        <button class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-orange hover:text-navy transition-colors duration-200">
+                            <i class="fas fa-calendar-alt mr-3 text-lg"></i>
+                            <span>Meetings</span>
+                        </button>
+                        <button class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-orange hover:text-navy transition-colors duration-200">
+                            <i class="fas fa-credit-card mr-3 text-lg"></i>
+                            <span>Payments</span>
+                        </button>
+                        <button class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-orange hover:text-navy transition-colors duration-200">
+                            <i class="fas fa-chalkboard-teacher mr-3 text-lg"></i>
+                            <span>Webinars</span>
                         </button>
                     </nav>
                 </div>
@@ -228,7 +223,7 @@
                 <!-- Dashboard Content -->
                 <div id="dashboardContent">
                     <!-- Welcome Banner with Date Filter -->
-                    <div class="bg-white rounded-lg shadow p-4 sm:p-6 mb-6 card-hover animate-fade-in">
+                    <div class="bg-white rounded-lg shadow p-4 sm:p-6 mb-6 transition-all duration-300 hover:shadow-md">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                             <div class="mb-4 md:mb-0">
                                 <h1 class="text-xl sm:text-2xl font-bold text-navy mb-1 sm:mb-2">Welcome back, Anita!</h1>
@@ -250,7 +245,7 @@
                     <!-- Key Stats Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
                         <!-- Total Mentored Students -->
-                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 card-hover animate-slide-up">
+                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 transition-all duration-300 hover:shadow-md">
                             <div class="flex items-center">
                                 <div class="p-2 sm:p-3 rounded-full bg-orange bg-opacity-20 text-orange mr-3 sm:mr-4">
                                     <i class="fas fa-user-graduate text-lg sm:text-xl"></i>
@@ -264,7 +259,7 @@
                         </div>
                         
                         <!-- New Students This Month -->
-                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 card-hover animate-slide-up" style="animation-delay: 0.1s">
+                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 transition-all duration-300 hover:shadow-md">
                             <div class="flex items-center">
                                 <div class="p-2 sm:p-3 rounded-full bg-blue-100 text-blue-500 mr-3 sm:mr-4">
                                     <i class="fas fa-user-plus text-lg sm:text-xl"></i>
@@ -278,7 +273,7 @@
                         </div>
                         
                         <!-- Mentorship Earnings -->
-                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 card-hover animate-slide-up" style="animation-delay: 0.2s">
+                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 transition-all duration-300 hover:shadow-md">
                             <div class="flex items-center">
                                 <div class="p-2 sm:p-3 rounded-full bg-green-100 text-green-500 mr-3 sm:mr-4">
                                     <i class="fas fa-hand-holding-usd text-lg sm:text-xl"></i>
@@ -292,7 +287,7 @@
                         </div>
                         
                         <!-- Webinar Earnings -->
-                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 card-hover animate-slide-up" style="animation-delay: 0.3s">
+                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 transition-all duration-300 hover:shadow-md">
                             <div class="flex items-center">
                                 <div class="p-2 sm:p-3 rounded-full bg-purple-100 text-purple-500 mr-3 sm:mr-4">
                                     <i class="fas fa-chalkboard-teacher text-lg sm:text-xl"></i>
@@ -309,7 +304,7 @@
                     <!-- Charts Section -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
                         <!-- Student Enrollment Chart -->
-                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 card-hover animate-fade-in">
+                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 transition-all duration-300 hover:shadow-md">
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                                 <h2 class="text-lg font-semibold text-navy mb-2 sm:mb-0">Student Enrollment</h2>
                                 <div class="flex space-x-1 sm:space-x-2">
@@ -324,7 +319,7 @@
                         </div>
                         
                         <!-- Earnings Chart -->
-                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 card-hover animate-fade-in" style="animation-delay: 0.1s">
+                        <div class="bg-white rounded-lg shadow p-4 sm:p-6 transition-all duration-300 hover:shadow-md">
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                                 <h2 class="text-lg font-semibold text-navy mb-2 sm:mb-0">Earnings Breakdown</h2>
                                 <div class="flex space-x-1 sm:space-x-2">
@@ -340,7 +335,7 @@
                     </div>
 
                     <!-- Recent Activity -->
-                    <div class="bg-white rounded-lg shadow overflow-hidden mb-6 card-hover animate-fade-in" style="animation-delay: 0.2s">
+                    <div class="bg-white rounded-lg shadow overflow-hidden mb-6 transition-all duration-300 hover:shadow-md">
                         <div class="px-4 sm:px-6 py-4 border-b border-gray-200">
                             <h2 class="text-lg font-semibold text-navy">Recent Activity</h2>
                         </div>
@@ -393,12 +388,256 @@
 
                 <!-- Student Profiles Content -->
                 <div id="studentProfilesContent" class="hidden">
-                    <!-- [Previous student profiles content remains the same] -->
+                    <div class="bg-white rounded-lg shadow p-4 sm:p-6 mb-6 transition-all duration-300 hover:shadow-md">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                            <h2 class="text-xl font-bold text-navy mb-2 md:mb-0">Student Profiles</h2>
+                            <div class="flex space-x-2">
+                                <div class="relative">
+                                    <input type="text" placeholder="Search students..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent">
+                                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                </div>
+                                <button class="bg-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md transition-colors duration-200">
+                                    <i class="fas fa-plus mr-2"></i>Add New
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Graduation Year</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Position</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="student-item hover:bg-gray-50 cursor-pointer transition-colors duration-150" data-id="1">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-orange flex items-center justify-center text-white font-bold">AS</div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-navy">Anita Sutana</div>
+                                                    <div class="text-sm text-gray-500">192216009</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2018</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CSE</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Web Programmer at RTC</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-orange hover:text-navy mr-3"><i class="fas fa-eye"></i></button>
+                                            <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-edit"></i></button>
+                                            <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr class="student-item hover:bg-gray-50 cursor-pointer transition-colors duration-150" data-id="2">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">AH</div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-navy">Arif Hossain</div>
+                                                    <div class="text-sm text-gray-500">182215034</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2017</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nutrition Science</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Director of Melbourne Nutrition</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-orange hover:text-navy mr-3"><i class="fas fa-eye"></i></button>
+                                            <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-edit"></i></button>
+                                            <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr class="student-item hover:bg-gray-50 cursor-pointer transition-colors duration-150" data-id="3">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">NH</div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-navy">Nobel Hasan</div>
+                                                    <div class="text-sm text-gray-500">172214078</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2016</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Business Administration</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Director of Melbourne Nutrition</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-orange hover:text-navy mr-3"><i class="fas fa-eye"></i></button>
+                                            <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-edit"></i></button>
+                                            <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr class="student-item hover:bg-gray-50 cursor-pointer transition-colors duration-150" data-id="4">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold">RH</div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-navy">Robert Hasan</div>
+                                                    <div class="text-sm text-gray-500">162213045</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2015</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Marketing</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Director of Melbourne Nutrition</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-orange hover:text-navy mr-3"><i class="fas fa-eye"></i></button>
+                                            <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-edit"></i></button>
+                                            <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-sm text-gray-500">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">4</span> results
+                            </div>
+                            <div class="flex space-x-1">
+                                <button class="px-3 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50" disabled>
+                                    Previous
+                                </button>
+                                <button class="px-3 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                                    1
+                                </button>
+                                <button class="px-3 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50" disabled>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Individual Student Profile Content -->
                 <div id="studentProfileContent" class="hidden">
-                    <!-- [Previous student profile content remains the same] -->
+                    <div class="bg-white rounded-lg shadow p-4 sm:p-6 mb-6 transition-all duration-300 hover:shadow-md">
+                        <div class="flex items-center justify-between mb-6">
+                            <button id="backToStudents" class="flex items-center text-orange hover:text-navy transition-colors duration-200">
+                                <i class="fas fa-arrow-left mr-2"></i> Back to Students
+                            </button>
+                            <div class="flex space-x-2">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors duration-200">
+                                    <i class="fas fa-edit mr-2"></i>Edit
+                                </button>
+                                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors duration-200">
+                                    <i class="fas fa-trash-alt mr-2"></i>Delete
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <!-- Left Column -->
+                            <div class="w-full md:w-1/3">
+                                <div class="bg-gray-50 rounded-lg p-4 sm:p-6">
+                                    <div class="flex flex-col items-center">
+                                        <div class="h-24 w-24 rounded-full bg-orange flex items-center justify-center text-white text-3xl font-bold mb-4" id="studentInitials">AS</div>
+                                        <h2 class="text-xl font-bold text-navy mb-1" id="studentName">Anita Sutana</h2>
+                                        <p class="text-gray-600 mb-2" id="studentTitle">Web Programmer at RTC</p>
+                                        <p class="text-sm text-gray-500" id="studentGraduation">Graduated: 2018</p>
+                                        <p class="text-sm text-gray-500" id="studentId">ID: 192216009</p>
+                                    </div>
+                                    
+                                    <div class="mt-6">
+                                        <h3 class="text-lg font-semibold text-navy mb-3">Contact Information</h3>
+                                        <div class="space-y-3">
+                                            <div>
+                                                <p class="text-xs font-medium text-gray-500">Full Name</p>
+                                                <p class="text-sm text-gray-800" id="studentFullName">Anita Sutana</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-xs font-medium text-gray-500">Department</p>
+                                                <p class="text-sm text-gray-800" id="studentDepartment">CSE</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-xs font-medium text-gray-500">Email</p>
+                                                <p class="text-sm text-gray-800" id="studentEmail">AnitaSutana@gmail.com</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-xs font-medium text-gray-500">Phone</p>
+                                                <p class="text-sm text-gray-800" id="studentPhone">03422502074</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-xs font-medium text-gray-500">LinkedIn</p>
+                                                <a href="#" class="text-sm text-orange hover:text-navy transition-colors duration-200" id="studentLinkedIn">linkedin.com/in/anitasutana</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Column -->
+                            <div class="w-full md:w-2/3">
+                                <div class="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6">
+                                    <h3 class="text-lg font-semibold text-navy mb-4">Professional Information</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-xs font-medium text-gray-500">Current Position</p>
+                                            <p class="text-sm text-gray-800" id="studentPosition">Web Programmer</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs font-medium text-gray-500">Company</p>
+                                            <p class="text-sm text-gray-800" id="studentCompany">RTC</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs font-medium text-gray-500">Research Interest</p>
+                                            <p class="text-sm text-gray-800" id="studentResearch">Blockchain</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs font-medium text-gray-500">Membership Status</p>
+                                            <p class="text-sm text-gray-800" id="studentMembership">Not Available</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 rounded-lg p-4 sm:p-6">
+                                    <h3 class="text-lg font-semibold text-navy mb-4">Mentorship History</h3>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead>
+                                                <tr>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Topic</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <tr>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">2023-05-15</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">1 hour</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">Career Guidance</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">2023-04-28</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">45 mins</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">Technical Interview</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">2023-04-10</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">30 mins</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">Resume Review</td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
@@ -406,283 +645,432 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const sidebar = document.getElementById('sidebar');
-    const toggleSidebarBtn = document.getElementById('toggleSidebar');
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const dashboardBtn = document.getElementById('dashboardBtn');
-    const studentProfilesBtn = document.getElementById('studentProfilesBtn');
-    const dashboardContent = document.getElementById('dashboardContent');
-    const studentProfilesContent = document.getElementById('studentProfilesContent');
-    const studentProfileContent = document.getElementById('studentProfileContent');
-    const currentSection = document.getElementById('currentSection');
-    const notificationBtn = document.getElementById('notificationBtn');
-    const notificationDropdown = document.getElementById('notificationDropdown');
-    const profileBtn = document.getElementById('profileBtn');
-    const profileDropdown = document.getElementById('profileDropdown');
-    const backToStudents = document.getElementById('backToStudents');
-    const studentItems = document.querySelectorAll('.student-item');
-    const timeFilterBtns = document.querySelectorAll('.time-filter-btn');
+            // DOM Elements
+            const sidebar = document.getElementById('sidebar');
+            const toggleSidebarBtn = document.getElementById('toggleSidebar');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const mobileSidebarOverlay = document.getElementById('mobileSidebarOverlay');
+            const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+            const dashboardBtn = document.getElementById('dashboardBtn');
+            const studentProfilesBtn = document.getElementById('studentProfilesBtn');
+            const mobileDashboardBtn = document.getElementById('mobileDashboardBtn');
+            const mobileStudentProfilesBtn = document.getElementById('mobileStudentProfilesBtn');
+            const dashboardContent = document.getElementById('dashboardContent');
+            const studentProfilesContent = document.getElementById('studentProfilesContent');
+            const studentProfileContent = document.getElementById('studentProfileContent');
+            const currentSection = document.getElementById('currentSection');
+            const notificationBtn = document.getElementById('notificationBtn');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileBtn = document.getElementById('profileBtn');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const backToStudents = document.getElementById('backToStudents');
+            const studentItems = document.querySelectorAll('.student-item');
+            const timeFilterBtns = document.querySelectorAll('.time-filter-btn');
+            const timeRangeSelect = document.getElementById('timeRange');
+            
+            // Chart instances
+            let enrollmentChart = null;
+            let earningsChart = null;
 
-    // Chart instances
-    let enrollmentChart = null;
-    let earningsChart = null;
+            // Sample student data
+            const students = {
+                1: {
+                    name: "Anita Sutana",
+                    title: "Web Programmer at RTC",
+                    graduation: "2018",
+                    id: "192216009",
+                    fullName: "Anita Sutana",
+                    department: "CSE",
+                    email: "AnitaSutana@gmail.com",
+                    phone: "03422502074",
+                    linkedIn: "linkedin.com/in/anitasutana",
+                    position: "Web Programmer",
+                    company: "RTC",
+                    research: "Blockchain",
+                    membership: "Not Available"
+                },
+                2: {
+                    name: "Arif Hossain",
+                    title: "Director of Melbourne Nutrition",
+                    graduation: "2017",
+                    id: "182215034",
+                    fullName: "Arif Hossain",
+                    department: "Nutrition Science",
+                    email: "arif.hossain@example.com",
+                    phone: "03422503456",
+                    linkedIn: "linkedin.com/in/arifhossain",
+                    position: "Director",
+                    company: "Melbourne Nutrition",
+                    research: "Food Technology",
+                    membership: "Available"
+                },
+                3: {
+                    name: "Nobel Hasan",
+                    title: "Director of Melbourne Nutrition",
+                    graduation: "2016",
+                    id: "172214078",
+                    fullName: "Nobel Hasan",
+                    department: "Business Administration",
+                    email: "nobel.hasan@example.com",
+                    phone: "03422507890",
+                    linkedIn: "linkedin.com/in/nobelhasan",
+                    position: "Director",
+                    company: "Melbourne Nutrition",
+                    research: "Business Strategy",
+                    membership: "Available"
+                },
+                4: {
+                    name: "Robert Hasan",
+                    title: "Director of Melbourne Nutrition",
+                    graduation: "2015",
+                    id: "162213045",
+                    fullName: "Robert Hasan",
+                    department: "Marketing",
+                    email: "robert.hasan@example.com",
+                    phone: "03422504567",
+                    linkedIn: "linkedin.com/in/roberthasan",
+                    position: "Director",
+                    company: "Melbourne Nutrition",
+                    research: "Digital Marketing",
+                    membership: "Available"
+                }
+            };
 
-    // Sample student data
-    const students = {
-        1: {
-            name: "Anita Sutana",
-            title: "Web Programmer at RTC",
-            graduation: "2018",
-            id: "192216009",
-            fullName: "Anita Sutana",
-            department: "CSE",
-            email: "AnitaSutana@gmail.com",
-            phone: "03422502074",
-            linkedIn: "linkedin.com/in/anitasutana",
-            position: "Web Programmer",
-            company: "RTC",
-            research: "Blockchain",
-            membership: "Not Available"
-        },
-        2: {
-            name: "Arif Hossain",
-            title: "Director of Melbourne Nutrition",
-            graduation: "2017",
-            id: "182215034",
-            fullName: "Arif Hossain",
-            department: "Nutrition Science",
-            email: "arif.hossain@example.com",
-            phone: "03422503456",
-            linkedIn: "linkedin.com/in/arifhossain",
-            position: "Director",
-            company: "Melbourne Nutrition",
-            research: "Food Technology",
-            membership: "Available"
-        },
-        3: {
-            name: "Nobel Hasan",
-            title: "Director of Melbourne Nutrition",
-            graduation: "2016",
-            id: "172214078",
-            fullName: "Nobel Hasan",
-            department: "Business Administration",
-            email: "nobel.hasan@example.com",
-            phone: "03422507890",
-            linkedIn: "linkedin.com/in/nobelhasan",
-            position: "Director",
-            company: "Melbourne Nutrition",
-            research: "Business Strategy",
-            membership: "Available"
-        },
-        4: {
-            name: "Robert Hasan",
-            title: "Director of Melbourne Nutrition",
-            graduation: "2015",
-            id: "162213045",
-            fullName: "Robert Hasan",
-            department: "Marketing",
-            email: "robert.hasan@example.com",
-            phone: "03422504567",
-            linkedIn: "linkedin.com/in/roberthasan",
-            position: "Director",
-            company: "Melbourne Nutrition",
-            research: "Digital Marketing",
-            membership: "Available"
-        }
-    };
+            // Dashboard data by time range
+            const dashboardData = {
+                monthly: {
+                    totalMentored: "1,248",
+                    newStudents: "48",
+                    mentorshipEarnings: "$12,480",
+                    webinarEarnings: "$8,750",
+                    enrollmentData: [45, 60, 75, 90, 65, 80, 95, 110, 85, 70, 90, 105],
+                    earningsData: {
+                        mentorship: [1200, 1500, 1800, 2100, 1600, 1900, 2200, 2500, 2000, 1700, 1900, 2200],
+                        webinar: [800, 950, 1100, 1250, 1000, 1150, 1300, 1450, 1200, 1050, 1250, 1400]
+                    }
+                },
+                yearly: {
+                    totalMentored: "3,842",
+                    newStudents: "542",
+                    mentorshipEarnings: "$38,420",
+                    webinarEarnings: "$26,250",
+                    enrollmentData: [450, 600, 750, 900, 650, 800, 950, 1100, 850, 700, 900, 1050],
+                    earningsData: {
+                        mentorship: [12000, 15000, 18000, 21000, 16000, 19000, 22000, 25000, 20000, 17000, 19000, 22000],
+                        webinar: [8000, 9500, 11000, 12500, 10000, 11500, 13000, 14500, 12000, 10500, 12500, 14000]
+                    }
+                },
+                all: {
+                    totalMentored: "12,480",
+                    newStudents: "1,842",
+                    mentorshipEarnings: "$124,800",
+                    webinarEarnings: "$87,500",
+                    enrollmentData: [4500, 6000, 7500, 9000, 6500, 8000, 9500, 11000, 8500, 7000, 9000, 10500],
+                    earningsData: {
+                        mentorship: [120000, 150000, 180000, 210000, 160000, 190000, 220000, 250000, 200000, 170000, 190000, 220000],
+                        webinar: [80000, 95000, 110000, 125000, 100000, 115000, 130000, 145000, 120000, 105000, 125000, 140000]
+                    }
+                }
+            };
 
-    // 1. Navigation functions
-    function showDashboard() {
-        dashboardContent.classList.remove('hidden');
-        studentProfilesContent.classList.add('hidden');
-        studentProfileContent.classList.add('hidden');
-        currentSection.textContent = "Dashboard";
-        
-        dashboardBtn.classList.add('bg-orange', 'text-navy');
-        studentProfilesBtn.classList.remove('bg-orange', 'text-navy');
-        
-        initCharts();
-    }
+            // 1. Navigation functions
+            function showDashboard() {
+                dashboardContent.classList.remove('hidden');
+                studentProfilesContent.classList.add('hidden');
+                studentProfileContent.classList.add('hidden');
+                currentSection.textContent = "Dashboard";
+                
+                dashboardBtn.classList.add('bg-orange', 'text-navy');
+                studentProfilesBtn.classList.remove('bg-orange', 'text-navy');
+                if (mobileDashboardBtn) mobileDashboardBtn.classList.add('bg-orange', 'text-navy');
+                if (mobileStudentProfilesBtn) mobileStudentProfilesBtn.classList.remove('bg-orange', 'text-navy');
+                
+                initCharts();
+                updateDashboardData(timeRangeSelect.value);
+            }
 
-    function showStudentProfiles() {
-        dashboardContent.classList.add('hidden');
-        studentProfilesContent.classList.remove('hidden');
-        studentProfileContent.classList.add('hidden');
-        currentSection.textContent = "Student Profiles";
-        
-        dashboardBtn.classList.remove('bg-orange', 'text-navy');
-        studentProfilesBtn.classList.add('bg-orange', 'text-navy');
-        
-        if (enrollmentChart) {
-            enrollmentChart.destroy();
-            enrollmentChart = null;
-        }
-        if (earningsChart) {
-            earningsChart.destroy();
-            earningsChart = null;
-        }
-    }
+            function showStudentProfiles() {
+                dashboardContent.classList.add('hidden');
+                studentProfilesContent.classList.remove('hidden');
+                studentProfileContent.classList.add('hidden');
+                currentSection.textContent = "Student Profiles";
+                
+                dashboardBtn.classList.remove('bg-orange', 'text-navy');
+                studentProfilesBtn.classList.add('bg-orange', 'text-navy');
+                if (mobileDashboardBtn) mobileDashboardBtn.classList.remove('bg-orange', 'text-navy');
+                if (mobileStudentProfilesBtn) mobileStudentProfilesBtn.classList.add('bg-orange', 'text-navy');
+                
+                if (enrollmentChart) {
+                    enrollmentChart.destroy();
+                    enrollmentChart = null;
+                }
+                if (earningsChart) {
+                    earningsChart.destroy();
+                    earningsChart = null;
+                }
+            }
 
-    function showStudentProfile(studentId) {
-        const student = students[studentId];
-        if (!student) return;
-        
-        // Update all profile fields
-        document.getElementById('studentName').textContent = student.name;
-        document.getElementById('studentTitle').textContent = student.title;
-        document.getElementById('studentGraduation').textContent = `Graduated: ${student.graduation}`;
-        document.getElementById('studentId').textContent = `ID: ${student.id}`;
-        document.getElementById('studentFullName').textContent = student.fullName;
-        document.getElementById('studentDepartment').textContent = student.department;
-        document.getElementById('studentEmail').textContent = student.email;
-        document.getElementById('studentPhone').textContent = student.phone;
-        document.getElementById('studentLinkedIn').textContent = student.linkedIn;
-        document.getElementById('studentLinkedIn').href = `https://${student.linkedIn}`;
-        document.getElementById('studentPosition').textContent = student.position;
-        document.getElementById('studentCompany').textContent = student.company;
-        document.getElementById('studentResearch').textContent = student.research;
-        document.getElementById('studentMembership').textContent = student.membership;
-        
-        dashboardContent.classList.add('hidden');
-        studentProfilesContent.classList.add('hidden');
-        studentProfileContent.classList.remove('hidden');
-        currentSection.textContent = student.name;
-    }
+            function showStudentProfile(studentId) {
+                const student = students[studentId];
+                if (!student) return;
+                
+                // Update all profile fields
+                document.getElementById('studentName').textContent = student.name;
+                document.getElementById('studentTitle').textContent = student.title;
+                document.getElementById('studentGraduation').textContent = `Graduated: ${student.graduation}`;
+                document.getElementById('studentId').textContent = `ID: ${student.id}`;
+                document.getElementById('studentFullName').textContent = student.fullName;
+                document.getElementById('studentDepartment').textContent = student.department;
+                document.getElementById('studentEmail').textContent = student.email;
+                document.getElementById('studentPhone').textContent = student.phone;
+                document.getElementById('studentLinkedIn').textContent = student.linkedIn;
+                document.getElementById('studentLinkedIn').href = `https://${student.linkedIn}`;
+                document.getElementById('studentPosition').textContent = student.position;
+                document.getElementById('studentCompany').textContent = student.company;
+                document.getElementById('studentResearch').textContent = student.research;
+                document.getElementById('studentMembership').textContent = student.membership;
+                document.getElementById('studentInitials').textContent = student.name.split(' ').map(n => n[0]).join('');
+                
+                dashboardContent.classList.add('hidden');
+                studentProfilesContent.classList.add('hidden');
+                studentProfileContent.classList.remove('hidden');
+                currentSection.textContent = student.name;
+            }
 
-    // 2. Event listeners
-    if (dashboardBtn) {
-        dashboardBtn.addEventListener('click', function(e) {
-            e.preventDefault();
+            // 2. Update dashboard data based on time range
+            function updateDashboardData(timeRange) {
+                const data = dashboardData[timeRange];
+                if (!data) return;
+                
+                document.getElementById('totalMentored').textContent = data.totalMentored;
+                document.getElementById('newStudents').textContent = data.newStudents;
+                document.getElementById('mentorshipEarnings').textContent = data.mentorshipEarnings;
+                document.getElementById('webinarEarnings').textContent = data.webinarEarnings;
+                
+                if (enrollmentChart) {
+                    enrollmentChart.data.datasets[0].data = data.enrollmentData;
+                    enrollmentChart.update();
+                }
+                
+                if (earningsChart) {
+                    earningsChart.data.datasets[0].data = data.earningsData.mentorship;
+                    earningsChart.data.datasets[1].data = data.earningsData.webinar;
+                    earningsChart.update();
+                }
+            }
+
+            // 3. Initialize charts
+            function initCharts() {
+                const enrollmentCtx = document.getElementById('enrollmentChart');
+                const earningsCtx = document.getElementById('earningsChart');
+                
+                if (!enrollmentChart && enrollmentCtx) {
+                    enrollmentChart = new Chart(enrollmentCtx.getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            datasets: [{
+                                label: 'Students Enrolled',
+                                data: dashboardData.monthly.enrollmentData,
+                                backgroundColor: 'rgba(252, 163, 17, 0.1)',
+                                borderColor: '#FCA311',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.05)'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                if (!earningsChart && earningsCtx) {
+                    earningsChart = new Chart(earningsCtx.getContext('2d'), {
+                        type: 'bar',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            datasets: [
+                                {
+                                    label: 'Mentorship',
+                                    data: dashboardData.monthly.earningsData.mentorship,
+                                    backgroundColor: '#14213D',
+                                    borderRadius: 4
+                                },
+                                {
+                                    label: 'Webinars',
+                                    data: dashboardData.monthly.earningsData.webinar,
+                                    backgroundColor: '#FCA311',
+                                    borderRadius: 4
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.05)'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    },
+                                    stacked: true,
+                                },
+                                y: {
+                                    stacked: true
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // 4. Event listeners
+            // Toggle desktop sidebar
+            if (toggleSidebarBtn) {
+                toggleSidebarBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('sidebar-collapsed');
+                });
+            }
+
+            // Toggle mobile sidebar
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileSidebar.classList.remove('-translate-x-full');
+                    mobileSidebarOverlay.classList.remove('hidden');
+                });
+            }
+
+            if (closeMobileSidebar) {
+                closeMobileSidebar.addEventListener('click', function() {
+                    mobileSidebar.classList.add('-translate-x-full');
+                    mobileSidebarOverlay.classList.add('hidden');
+                });
+            }
+
+            if (mobileSidebarOverlay) {
+                mobileSidebarOverlay.addEventListener('click', function() {
+                    mobileSidebar.classList.add('-translate-x-full');
+                    mobileSidebarOverlay.classList.add('hidden');
+                });
+            }
+
+            // Navigation buttons
+            if (dashboardBtn) {
+                dashboardBtn.addEventListener('click', showDashboard);
+            }
+
+            if (studentProfilesBtn) {
+                studentProfilesBtn.addEventListener('click', showStudentProfiles);
+            }
+
+            if (mobileDashboardBtn) {
+                mobileDashboardBtn.addEventListener('click', function() {
+                    showDashboard();
+                    mobileSidebar.classList.add('-translate-x-full');
+                    mobileSidebarOverlay.classList.add('hidden');
+                });
+            }
+
+            if (mobileStudentProfilesBtn) {
+                mobileStudentProfilesBtn.addEventListener('click', function() {
+                    showStudentProfiles();
+                    mobileSidebar.classList.add('-translate-x-full');
+                    mobileSidebarOverlay.classList.add('hidden');
+                });
+            }
+
+            if (backToStudents) {
+                backToStudents.addEventListener('click', showStudentProfiles);
+            }
+
+            // Student item click handlers
+            if (studentItems) {
+                studentItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        const studentId = this.getAttribute('data-id');
+                        showStudentProfile(studentId);
+                    });
+                });
+            }
+
+            // Notification dropdown
+            if (notificationBtn) {
+                notificationBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('hidden');
+                    profileDropdown.classList.add('hidden');
+                });
+            }
+
+            // Profile dropdown
+            if (profileBtn) {
+                profileBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    profileDropdown.classList.toggle('hidden');
+                    notificationDropdown.classList.add('hidden');
+                });
+            }
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                notificationDropdown.classList.add('hidden');
+                profileDropdown.classList.add('hidden');
+            });
+
+            // Time range filter
+            if (timeRangeSelect) {
+                timeRangeSelect.addEventListener('change', function() {
+                    updateDashboardData(this.value);
+                });
+            }
+
+            // Time filter buttons for charts
+            if (timeFilterBtns) {
+                timeFilterBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        timeFilterBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        // Here you would update the charts based on the period
+                        // For now, we'll just log the selected period
+                        console.log('Selected period:', this.dataset.period);
+                    });
+                });
+            }
+
+            // Initialize the dashboard view
             showDashboard();
         });
-    }
-
-    if (studentProfilesBtn) {
-        studentProfilesBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            showStudentProfiles();
-        });
-    }
-
-    if (backToStudents) {
-        backToStudents.addEventListener('click', function(e) {
-            e.preventDefault();
-            showStudentProfiles();
-        });
-    }
-
-    // Student item click handlers
-    if (studentItems) {
-        studentItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const studentId = this.getAttribute('data-id');
-                showStudentProfile(studentId);
-            });
-        });
-    }
-
-    // 3. Initialize charts
-    function initCharts() {
-        const enrollmentCtx = document.getElementById('enrollmentChart');
-        const earningsCtx = document.getElementById('earningsChart');
-        
-        if (!enrollmentChart && enrollmentCtx) {
-            enrollmentChart = new Chart(enrollmentCtx.getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    datasets: [{
-                        label: 'Students Enrolled',
-                        data: [45, 60, 75, 90, 65, 80, 95, 110, 85, 70, 90, 105],
-                        backgroundColor: 'rgba(252, 163, 17, 0.1)',
-                        borderColor: '#FCA311',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        if (!earningsChart && earningsCtx) {
-            earningsChart = new Chart(earningsCtx.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    datasets: [
-                        {
-                            label: 'Mentorship',
-                            data: [1200, 1500, 1800, 2100, 1600, 1900, 2200, 2500, 2000, 1700, 1900, 2200],
-                            backgroundColor: '#14213D',
-                            borderRadius: 4
-                        },
-                        {
-                            label: 'Webinars',
-                            data: [800, 950, 1100, 1250, 1000, 1150, 1300, 1450, 1200, 1050, 1250, 1400],
-                            backgroundColor: '#FCA311',
-                            borderRadius: 4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            stacked: true,
-                        },
-                        y: {
-                            stacked: true
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    // Initialize the dashboard view
-    showDashboard();
-
-    // [Rest of your existing code for notifications, profile dropdown, etc.]
-});
     </script>
 </body>
 </html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Schedule Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .current-class {
+            background-color: #FCA311;
+            color: white;
+        }
+        .current-day {
+            background-color: #14213D;
+            color: white;
+        }
+        .current-month {
+            font-weight: bold;
+            color: #14213D;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-4 max-w-6xl">
+        <!-- Top Navigation Bar -->
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">Student Schedule</h1>
+            
+            <!-- Monthly Calendar -->
+            <div class="flex justify-between mb-4 overflow-x-auto">
+                <div class="month-tab px-4 py-2 cursor-pointer">Sep</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">Oct</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">Nov</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">Dec</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">Jan</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">Feb</div>
+                <div class="month-tab px-4 py-2 cursor-pointer current-month">Mar</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">Apr</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">May</div>
+                <div class="month-tab px-4 py-2 cursor-pointer">Jun</div>
+            </div>
+            
+            <!-- Weekly Day Picker -->
+            <div class="flex justify-between overflow-x-auto">
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Mon 1</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Tue 2</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Wed 3</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Thu 4</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Fri 5</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sat 6</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sun 7</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Mon 8</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full current-day">Tue 9</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Wed 10</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Thu 11</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Fri 12</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sat 13</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Sun 14</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Mon 15</div>
+                <div class="day-tab px-3 py-2 cursor-pointer rounded-full">Tue 16</div>
+            </div>
+        </div>
+        
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- Left Panel - Daily Schedule -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex-1">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">March 9, Tuesday</h2>
+                
+                <div class="space-y-4">
+                    <!-- Class Item -->
+                    <div class="class-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">08:15 - 09:00</span>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">Upcoming</span>
+                        </div>
+                        <h3 class="text-lg font-medium mt-1">Mathematics</h3>
+                        <p class="text-gray-600">Mrs. Thomas</p>
+                    </div>
+                    
+                    <!-- Current Class Item -->
+                    <div class="class-item p-4 border border-gray-200 rounded-lg current-class hover:shadow-md transition">
+                        <div class="flex justify-between items-center">
+                            <span class="text-white">09:00 - 10:00</span>
+                            <span class="text-sm bg-white text-orange-600 px-2 py-1 rounded">In Progress</span>
+                        </div>
+                        <h3 class="text-lg font-medium mt-1 text-white">Chemistry</h3>
+                        <p class="text-white">Dr. Bennett</p>
+                    </div>
+                    
+                    <!-- Class Item -->
+                    <div class="class-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">10:00 - 10:45</span>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">Online</span>
+                        </div>
+                        <h3 class="text-lg font-medium mt-1">Chemistry</h3>
+                        <p class="text-gray-600">Dr. Bennett</p>
+                        <p class="text-sm text-gray-500 mt-1">Online lesson</p>
+                    </div>
+                    
+                    <!-- Class Item -->
+                    <div class="class-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">10:25 - 11:10</span>
+                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">Later</span>
+                        </div>
+                        <h3 class="text-lg font-medium mt-1">Literature</h3>
+                        <p class="text-gray-600">Mrs. Davis</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Panel - Class Details -->
+            <div class="bg-white rounded-lg shadow-md p-6 w-full md:w-96">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Class Details</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium">Chemistry</h3>
+                        <p class="text-gray-600">Dr. Bennett</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-clock text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-600">Time</p>
+                            <p class="font-medium">09:00 - 10:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-laptop-house text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-600">Format</p>
+                            <p class="font-medium">In-Person</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <p class="text-gray-600 mb-2">Time remaining:</p>
+                        <p class="text-2xl font-bold" id="countdown">35:22</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-gray-600 mb-2">Participants:</p>
+                        <div class="flex items-center">
+                            <div class="flex -space-x-2">
+                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
+                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
+                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Student">
+                                <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-medium">+12</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="joinButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition flex items-center justify-center space-x-2">
+                        <i class="fas fa-video"></i>
+                        <span>Join the Lesson</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update countdown timer
+        function updateCountdown() {
+            // Set the end time to 10:00 (1 hour from now for demo)
+            const now = new Date();
+            const endTime = new Date(now);
+            endTime.setHours(now.getHours() + 1);
+            
+            const diff = endTime - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = "Class ended";
+                return;
+            }
+            
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = 
+                `${Math.floor(minutes)}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Handle class item clicks
+        document.querySelectorAll('.class-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.class-item').forEach(i => {
+                    i.classList.remove('current-class');
+                    i.classList.add('border-gray-200');
+                    i.querySelectorAll('span, h3, p').forEach(el => {
+                        el.classList.remove('text-white');
+                        el.classList.add('text-gray-600');
+                    });
+                });
+                
+                this.classList.add('current-class');
+                this.classList.remove('border-gray-200');
+                this.querySelectorAll('span, h3, p').forEach(el => {
+                    el.classList.add('text-white');
+                    el.classList.remove('text-gray-600');
+                });
+                
+                // Update right panel with selected class details
+                // In a real app, this would fetch actual data
+            });
+        });
+        
+        // Handle day tab clicks
+        document.querySelectorAll('.day-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.day-tab').forEach(t => {
+                    t.classList.remove('current-day');
+                    t.classList.remove('bg-gray-800');
+                    t.classList.remove('text-white');
+                });
+                
+                this.classList.add('current-day');
+                this.classList.add('bg-gray-800');
+                this.classList.add('text-white');
+                
+                // Update schedule for selected day
+                // In a real app, this would fetch the schedule for the selected date
+            });
+        });
+        
+        // Handle month tab clicks
+        document.querySelectorAll('.month-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.month-tab').forEach(t => {
+                    t.classList.remove('current-month');
+                    t.classList.remove('font-bold');
+                    t.classList.remove('text-gray-800');
+                });
+                
+                this.classList.add('current-month');
+                this.classList.add('font-bold');
+                this.classList.add('text-gray-800');
+                
+                // Update calendar for selected month
+                // In a real app, this would show the days for the selected month
+            });
+        });
+        
+        // Handle join button click
+        document.getElementById('joinButton').addEventListener('click', function() {
+            alert('Joining the lesson... Redirecting to Zoom/Teams.');
+            // In a real app, this would open the meeting link
+        });
+    </script>
+</body>
+</html>
