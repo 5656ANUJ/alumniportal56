@@ -6,99 +6,29 @@
     <title>Mentor Chat</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#8b5cf6',
-                        dark: '#1e293b',
-                        darker: '#0f172a',
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.3s ease-in-out',
-                        'slide-up': 'slideUp 0.3s ease-out',
-                        'slide-in': 'slideIn 0.3s ease-out',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
-                        },
-                        slideUp: {
-                            '0%': { transform: 'translateY(10px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' }
-                        },
-                        slideIn: {
-                            '0%': { transform: 'translateX(-100%)' },
-                            '100%': { transform: 'translateX(0)' }
-                        }
-                    }
-                }
+    <style>
+        /* Custom styles */
+        .chat-container {
+            height: 100vh;
+            height: 100dvh;
+        }
+        @media (min-width: 768px) {
+            .chat-container {
+                height: 100vh;
+                grid-template-columns: 320px 1fr;
             }
         }
-    </script>
-    <style>
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .messages-container {
+            height: calc(100% - 140px);
         }
-        .chat-bubble {
-            transition: all 0.3s ease;
-        }
-        .chat-bubble:hover {
-            transform: translateY(-2px);
-        }
-        .waveform {
-            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
-            height: 40px;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .waveform::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                to right,
-                transparent,
-                transparent 2px,
-                rgba(255,255,255,0.2) 2px,
-                rgba(255,255,255,0.2) 4px
-            );
-            animation: wave 1s linear infinite;
-        }
-        @keyframes wave {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-4px); }
-        }
-        .scrollbar-hide::-webkit-scrollbar {
+        .scrollbar-hidden::-webkit-scrollbar {
             display: none;
         }
-        .scrollbar-hide {
+        .scrollbar-hidden {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        .typing-indicator {
-            display: inline-block;
-            padding: 10px 15px;
-            background: #334155;
-            border-radius: 20px;
-        }
         .typing-indicator span {
-            height: 8px;
-            width: 8px;
-            background: #94a3b8;
-            border-radius: 50%;
-            display: inline-block;
-            margin: 0 2px;
             animation: bounce 1.5s infinite ease-in-out;
         }
         .typing-indicator span:nth-child(2) {
@@ -109,404 +39,288 @@
         }
         @keyframes bounce {
             0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
+            30% { transform: translateY(-4px); }
         }
-        
-        /* Mobile menu animation */
-        .mobile-menu-enter {
-            transform: translateX(-100%);
+        .message-enter {
+            opacity: 0;
+            transform: translateY(10px);
         }
-        .mobile-menu-enter-active {
-            transform: translateX(0);
-            transition: transform 300ms ease-out;
+        .message-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 300ms ease-out;
         }
-        .mobile-menu-exit {
-            transform: translateX(0);
+        .slide-in {
+            animation: slideIn 300ms ease-out forwards;
         }
-        .mobile-menu-exit-active {
-            transform: translateX(-100%);
-            transition: transform 300ms ease-out;
+        .slide-out {
+            animation: slideOut 300ms ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-darker text-gray-100 h-screen overflow-hidden">
-    <!-- Mobile Menu Button -->
-    <div class="md:hidden fixed top-4 left-4 z-50">
-        <button id="mobileMenuButton" class="text-white bg-gray-800 p-2 rounded-full">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
+<body class="bg-gray-100 text-gray-800">
+    <div class="chat-container grid grid-rows-[auto_1fr_auto] md:grid-rows-1 md:grid-cols-[320px_1fr] overflow-hidden">
+        <!-- Mobile Header -->
+        <header class="bg-indigo-600 text-white p-4 flex items-center justify-between md:hidden">
+            <button id="menuToggle" class="text-white">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <h1 class="text-xl font-bold">Mentor Chat</h1>
+            <div class="w-6"></div> <!-- Spacer for alignment -->
+        </header>
 
-    <!-- Mobile Sidebar Overlay -->
-    <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
-    
-    <!-- Chat List Panel -->
-    <div id="chatListPanel" class="fixed md:relative inset-y-0 left-0 z-30 w-72 bg-dark border-r border-gray-800 flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
-        <!-- Header -->
-        <div class="p-4 border-b border-gray-800 flex items-center justify-between">
-            <h1 class="text-xl font-bold">CHATS</h1>
-            <button class="md:hidden text-gray-400 hover:text-white" id="closeChatList">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <!-- Tabs -->
-        <div class="flex border-b border-gray-800">
-            <button class="flex-1 py-3 font-medium relative text-primary">
-                Messages
-                <span class="absolute top-1 right-4 bg-primary text-white text-xs px-2 py-0.5 rounded-full">4</span>
-            </button>
-            <button class="flex-1 py-3 font-medium text-gray-400 hover:text-white">Notifications</button>
-            <button class="flex-1 py-3 font-medium text-gray-400 hover:text-white">Support</button>
-        </div>
-        
-        <!-- Chat List -->
-        <div class="flex-1 overflow-y-auto scrollbar-hide" id="chatList">
-            <!-- Chat items will be dynamically added here -->
-        </div>
-    </div>
-    
-    <!-- Chat Conversation Panel -->
-    <div class="flex-1 flex flex-col glassmorphism h-full">
-        <!-- Chat Header -->
-        <div class="p-4 border-b border-gray-800 flex items-center justify-between" id="chatHeader">
-            <div class="flex items-center">
-                <button class="md:hidden text-white mr-3" id="backButton">
+        <!-- Sidebar - Chat List -->
+        <aside id="sidebar" class="bg-white border-r border-gray-200 absolute md:relative inset-y-0 left-0 z-10 w-full md:w-auto md:block transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="h-full flex flex-col">
+                <!-- Sidebar Header -->
+                <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+                    <h2 class="text-lg font-semibold">Chats</h2>
+                    <button class="md:hidden text-gray-500 hover:text-gray-700" id="closeSidebar">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="flex border-b border-gray-200">
+                    <button class="flex-1 py-3 font-medium text-indigo-600 border-b-2 border-indigo-600">
+                        Messages <span class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full ml-1">4</span>
+                    </button>
+                    <button class="flex-1 py-3 font-medium text-gray-500 hover:text-gray-700">
+                        Notifications
+                    </button>
+                </div>
+                
+                <!-- Chat List -->
+                <div class="flex-1 overflow-y-auto scrollbar-hidden" id="chatList">
+                    <!-- Chats will be populated here -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="bg-gray-50 flex flex-col h-full">
+            <!-- Chat Header -->
+            <div class="bg-white border-b border-gray-200 p-4 flex items-center">
+                <button id="backButton" class="mr-3 text-gray-500 hover:text-gray-700 md:hidden">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <div class="relative mr-3">
-                    <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold" id="currentChatAvatar">AS</div>
-                    <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-gray-500 rounded-full border-2 border-gray-900" id="currentChatStatus"></div>
+                <div class="flex items-center flex-1">
+                    <div class="relative">
+                        <div id="currentChatAvatar" class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">AS</div>
+                        <div id="currentChatStatus" class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-gray-400 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="ml-3">
+                        <h2 id="currentChatName" class="font-medium">Select a chat</h2>
+                        <p id="currentChatStatusText" class="text-xs text-gray-500">Offline</p>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="font-medium" id="currentChatName">Select a chat</h2>
-                    <p class="text-xs text-gray-400" id="currentChatStatusText">Offline</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button class="text-gray-400 hover:text-white" id="videoCallBtn">
-                    <i class="fas fa-video"></i>
-                </button>
-                <button class="text-gray-400 hover:text-white" id="voiceCallBtn">
-                    <i class="fas fa-phone"></i>
-                </button>
-                <button class="text-gray-400 hover:text-white" id="menuBtn">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Messages Area -->
-        <div class="flex-1 overflow-y-auto p-4 scrollbar-hide bg-gradient-to-b from-gray-900/50 to-gray-900/20" id="messagesContainer">
-            <div class="text-center text-gray-400 py-10" id="noChatSelected">
-                Select a chat to start messaging
-            </div>
-            <!-- Messages will be dynamically added here -->
-        </div>
-        
-        <!-- Message Input -->
-        <div class="p-4 border-t border-gray-800" id="messageInputContainer" style="display: none;">
-            <div class="flex items-center bg-gray-800 rounded-full px-4 py-2">
-                <button class="text-gray-400 hover:text-white mr-2" id="emojiBtn">
-                    <i class="far fa-smile"></i>
-                </button>
-                <input type="text" placeholder="Write your message..." class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-gray-400" id="messageInput">
-                <div class="flex items-center space-x-2 ml-2">
-                    <button class="text-gray-400 hover:text-white" id="attachBtn">
-                        <i class="fas fa-paperclip"></i>
+                <div class="flex space-x-4">
+                    <button class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-video"></i>
                     </button>
-                    <button class="text-gray-400 hover:text-white" id="micBtn">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <button class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white" id="sendBtn">
-                        <i class="fas fa-paper-plane text-sm"></i>
+                    <button class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-phone"></i>
                     </button>
                 </div>
             </div>
-        </div>
+            
+            <!-- Messages Area -->
+            <div id="messagesContainer" class="messages-container overflow-y-auto p-4 scrollbar-hidden">
+                <div id="noChatSelected" class="h-full flex flex-col items-center justify-center text-gray-400">
+                    <i class="fas fa-comments text-4xl mb-4"></i>
+                    <p class="text-lg">Select a chat to start messaging</p>
+                </div>
+                <!-- Messages will be populated here -->
+            </div>
+            
+            <!-- Message Input -->
+            <div id="messageInputContainer" class="bg-white border-t border-gray-200 p-4 hidden">
+                <div class="flex items-center bg-gray-100 rounded-full px-4">
+                    <button class="text-gray-500 hover:text-gray-700 mr-2">
+                        <i class="far fa-smile"></i>
+                    </button>
+                    <input type="text" id="messageInput" placeholder="Type a message..." class="flex-1 bg-transparent border-none focus:ring-0 py-3">
+                    <div class="flex items-center space-x-2 ml-2">
+                        <button class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button id="sendButton" class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white">
+                            <i class="fas fa-paper-plane text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Student data from the meeting portal
-            const students = {
-                1: {
-                    id: "1",
-                    name: "Anita Sutana",
-                    title: "Web Programmer at RTC",
-                    graduation: "2018",
-                    avatar: "AS",
-                    color: "indigo",
-                    online: false,
-                    lastSeen: "2 hours ago",
-                    messages: [
-                        {
-                            type: "received",
-                            text: "Hello Professor, I have a question about the assignment.",
-                            time: "10:30 AM",
-                            date: "December 10"
-                        },
-                        {
-                            type: "sent",
-                            text: "Hi Anita, what's your question?",
-                            time: "10:32 AM",
-                            date: "December 10"
-                        },
-                        {
-                            type: "received",
-                            text: "I'm not sure how to implement the blockchain functionality in our project.",
-                            time: "10:35 AM",
-                            date: "December 10"
-                        },
-                        {
-                            type: "sent",
-                            text: "Let's schedule a meeting to go through it together.",
-                            time: "10:37 AM",
-                            date: "December 10"
-                        }
-                    ]
-                },
-                2: {
-                    id: "2",
-                    name: "Arif Hossain",
-                    title: "Director of Melbourne Nutrition",
-                    graduation: "2017",
-                    avatar: "AH",
-                    color: "blue",
-                    online: true,
-                    lastSeen: "Online",
-                    messages: [
-                        {
-                            type: "received",
-                            text: "Professor, when can we meet to discuss my research paper?",
-                            time: "9:15 AM",
-                            date: "December 10"
-                        }
-                    ]
-                },
-                3: {
-                    id: "3",
-                    name: "Nobel Hasan",
-                    title: "Director of Melbourne Nutrition",
-                    graduation: "2016",
-                    avatar: "NH",
-                    color: "green",
-                    online: false,
-                    lastSeen: "Yesterday",
-                    messages: [
-                        {
-                            type: "sent",
-                            text: "Nobel, did you review the materials I sent?",
-                            time: "3:45 PM",
-                            date: "December 9"
-                        },
-                        {
-                            type: "received",
-                            text: "Yes, I did. They were very helpful!",
-                            time: "4:30 PM",
-                            date: "December 9"
-                        }
-                    ]
-                },
-                4: {
-                    id: "4",
-                    name: "Robert Hasan",
-                    title: "Director of Melbourne Nutrition",
-                    graduation: "2015",
-                    avatar: "RH",
-                    color: "purple",
-                    online: true,
-                    lastSeen: "Online",
-                    messages: [
-                        {
-                            type: "received",
-                            text: "Good morning Professor! I wanted to follow up about the internship opportunity.",
-                            time: "8:30 AM",
-                            date: "December 10"
-                        }
-                    ]
-                }
-            };
-
             // DOM Elements
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileOverlay = document.getElementById('mobileOverlay');
-            const chatListPanel = document.getElementById('chatListPanel');
-            const closeChatList = document.getElementById('closeChatList');
+            const menuToggle = document.getElementById('menuToggle');
+            const closeSidebar = document.getElementById('closeSidebar');
+            const sidebar = document.getElementById('sidebar');
             const backButton = document.getElementById('backButton');
             const chatList = document.getElementById('chatList');
             const messagesContainer = document.getElementById('messagesContainer');
             const noChatSelected = document.getElementById('noChatSelected');
             const messageInputContainer = document.getElementById('messageInputContainer');
             const messageInput = document.getElementById('messageInput');
-            const sendBtn = document.getElementById('sendBtn');
+            const sendButton = document.getElementById('sendButton');
             const currentChatName = document.getElementById('currentChatName');
             const currentChatAvatar = document.getElementById('currentChatAvatar');
             const currentChatStatus = document.getElementById('currentChatStatus');
             const currentChatStatusText = document.getElementById('currentChatStatusText');
 
-            // Current active chat
+            // Sample Data
+            const students = [
+                {
+                    id: 1,
+                    name: "Anita Sutana",
+                    avatar: "AS",
+                    color: "indigo",
+                    online: false,
+                    lastSeen: "2 hours ago",
+                    messages: [
+                        { type: "received", text: "Hello Professor, I have a question about the assignment.", time: "10:30 AM" },
+                        { type: "sent", text: "Hi Anita, what's your question?", time: "10:32 AM" },
+                        { type: "received", text: "I'm not sure how to implement the blockchain functionality.", time: "10:35 AM" }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "Arif Hossain",
+                    avatar: "AH",
+                    color: "blue",
+                    online: true,
+                    lastSeen: "Online",
+                    messages: [
+                        { type: "received", text: "Professor, when can we meet to discuss my research?", time: "9:15 AM" }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: "Nobel Hasan",
+                    avatar: "NH",
+                    color: "green",
+                    online: false,
+                    lastSeen: "Yesterday",
+                    messages: [
+                        { type: "sent", text: "Did you review the materials I sent?", time: "3:45 PM" },
+                        { type: "received", text: "Yes, they were very helpful!", time: "4:30 PM" }
+                    ]
+                },
+                {
+                    id: 4,
+                    name: "Robert Hasan",
+                    avatar: "RH",
+                    color: "purple",
+                    online: true,
+                    lastSeen: "Online",
+                    messages: [
+                        { type: "received", text: "Good morning! About the internship opportunity...", time: "8:30 AM" }
+                    ]
+                }
+            ];
+
+            // State
             let activeChatId = null;
             let typingIntervals = {};
 
-            // Toggle mobile menu
-            function toggleMobileMenu() {
-                chatListPanel.classList.toggle('-translate-x-full');
-                mobileOverlay.classList.toggle('hidden');
-                document.body.classList.toggle('overflow-hidden');
-            }
+            // Toggle Sidebar on Mobile
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.remove('-translate-x-full');
+            });
 
-            // Show chat list on mobile
-            function showChatList() {
-                chatListPanel.classList.remove('-translate-x-full');
-                mobileOverlay.classList.add('hidden');
-            }
+            closeSidebar.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+            });
 
-            // Hide chat list on mobile
-            function hideChatList() {
-                chatListPanel.classList.add('-translate-x-full');
-                mobileOverlay.classList.remove('hidden');
-            }
+            backButton.addEventListener('click', () => {
+                activeChatId = null;
+                noChatSelected.style.display = 'flex';
+                messageInputContainer.style.display = 'none';
+                updateChatHeader();
+            });
 
-            // Event listeners for mobile menu
-            mobileMenuButton.addEventListener('click', toggleMobileMenu);
-            mobileOverlay.addEventListener('click', toggleMobileMenu);
-            closeChatList.addEventListener('click', toggleMobileMenu);
-            backButton.addEventListener('click', showChatList);
-
-            // Render chat list
+            // Render Chat List
             function renderChatList() {
                 chatList.innerHTML = '';
-                Object.values(students).forEach(student => {
+                students.forEach(student => {
                     const lastMessage = student.messages[student.messages.length - 1];
                     const unreadCount = student.messages.filter(msg => msg.type === 'received' && !msg.read).length;
 
                     const chatItem = document.createElement('div');
-                    chatItem.className = `p-3 border-b border-gray-800 hover:bg-gray-800/50 cursor-pointer transition-colors duration-200 chat-item`;
+                    chatItem.className = 'p-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer';
                     chatItem.dataset.id = student.id;
                     chatItem.innerHTML = `
                         <div class="flex items-center">
                             <div class="relative">
-                                <div class="w-12 h-12 rounded-full bg-${student.color}-500 flex items-center justify-center text-white font-bold">${student.avatar}</div>
-                                <div class="absolute bottom-0 right-0 w-3 h-3 ${student.online ? 'bg-green-500' : 'bg-gray-500'} rounded-full border-2 border-dark"></div>
+                                <div class="w-10 h-10 rounded-full bg-${student.color}-500 flex items-center justify-center text-white font-bold">${student.avatar}</div>
+                                <div class="absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-400'} rounded-full border-2 border-white"></div>
                             </div>
                             <div class="ml-3 flex-1">
                                 <div class="flex justify-between items-center">
                                     <h3 class="font-medium">${student.name}</h3>
-                                    <span class="text-xs text-gray-400">${lastMessage.time}</span>
+                                    <span class="text-xs text-gray-500">${lastMessage.time}</span>
                                 </div>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm text-gray-400 truncate">
-                                        ${lastMessage.type === 'typing' ? 
-                                            '<span class="typing-indicator"><span></span><span></span><span></span></span>' : 
-                                            (lastMessage.text || 
-                                            (lastMessage.type === 'voice' ? 'Voice message' : 
-                                            (lastMessage.type === 'media' ? `${lastMessage.count} photos` : 
-                                            (lastMessage.type === 'file' ? lastMessage.name : ''))))}
-                                    </p>
-                                    ${unreadCount > 0 ? `<span class="w-5 h-5 bg-primary rounded-full flex items-center justify-center text-xs">${unreadCount}</span>` : ''}
-                                </div>
+                                <p class="text-sm text-gray-500 truncate">${lastMessage.text}</p>
                             </div>
+                            ${unreadCount > 0 ? `<span class="ml-2 w-5 h-5 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xs">${unreadCount}</span>` : ''}
                         </div>
                     `;
                     chatList.appendChild(chatItem);
                 });
 
-                // Add click event to chat items
-                document.querySelectorAll('.chat-item').forEach(item => {
+                // Add click handlers
+                document.querySelectorAll('#chatList > div').forEach(item => {
                     item.addEventListener('click', function() {
-                        loadChat(this.dataset.id);
-                        // On mobile, hide chat list after selection
+                        const studentId = parseInt(this.dataset.id);
+                        loadChat(studentId);
                         if (window.innerWidth < 768) {
-                            hideChatList();
+                            sidebar.classList.add('-translate-x-full');
                         }
                     });
                 });
             }
 
-            // Load chat messages
+            // Load Chat
             function loadChat(studentId) {
                 activeChatId = studentId;
-                const student = students[studentId];
+                const student = students.find(s => s.id === studentId);
                 
                 // Update header
                 currentChatName.textContent = student.name;
                 currentChatAvatar.textContent = student.avatar;
                 currentChatAvatar.className = `w-10 h-10 rounded-full bg-${student.color}-500 flex items-center justify-center text-white font-bold`;
-                currentChatStatus.className = `absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-500'} rounded-full border-2 border-gray-900`;
+                currentChatStatus.className = `absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-400'} rounded-full border-2 border-white`;
                 currentChatStatusText.textContent = student.online ? 'Online' : `Last seen ${student.lastSeen}`;
-                currentChatStatusText.className = `text-xs ${student.online ? 'text-green-400' : 'text-gray-400'}`;
+                currentChatStatusText.className = `text-xs ${student.online ? 'text-green-500' : 'text-gray-500'}`;
                 
-                // Show message input and hide "no chat" message
+                // Show messages
                 noChatSelected.style.display = 'none';
                 messageInputContainer.style.display = 'block';
                 
-                // On mobile, show back button
-                if (window.innerWidth < 768) {
-                    backButton.style.display = 'block';
-                }
-                
-                // Clear and render messages
+                // Render messages
                 messagesContainer.innerHTML = '';
-                
-                // Group messages by date
-                const messagesByDate = {};
                 student.messages.forEach(message => {
-                    if (!messagesByDate[message.date]) {
-                        messagesByDate[message.date] = [];
-                    }
-                    messagesByDate[message.date].push(message);
-                });
-                
-                // Render messages with date separators
-                Object.entries(messagesByDate).forEach(([date, messages]) => {
-                    // Add date separator
-                    const dateSeparator = document.createElement('div');
-                    dateSeparator.className = 'flex items-center my-4';
-                    dateSeparator.innerHTML = `
-                        <div class="flex-1 border-t border-gray-700"></div>
-                        <span class="px-3 text-xs text-gray-400">${date}</span>
-                        <div class="flex-1 border-t border-gray-700"></div>
-                    `;
-                    messagesContainer.appendChild(dateSeparator);
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `flex mb-4 ${message.type === 'sent' ? 'justify-end' : 'justify-start'}`;
                     
-                    // Add messages
-                    messages.forEach(message => {
-                        const messageDiv = document.createElement('div');
-                        messageDiv.className = `flex ${message.type === 'sent' || message.type === 'typing' ? 'justify-end' : ''} mb-4 animate-fade-in`;
-                        
-                        if (message.type === 'typing') {
-                            messageDiv.innerHTML = `
-                                <div class="flex mb-4">
-                                    <div class="w-8 h-8 rounded-full bg-${student.color}-500 flex items-center justify-center text-white text-xs mr-2">${student.avatar}</div>
-                                    <div>
-                                        <div class="bg-gray-800 rounded-2xl rounded-tl-none px-4 py-2">
-                                            <div class="typing-indicator">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                        <p class="text-xs text-gray-400 mt-1">${message.time}</p>
-                                    </div>
-                                </div>
-                            `;
-                        } else if (message.type === 'received' || message.type === 'sent') {
-                            messageDiv.innerHTML = `
-                                <div class="${message.type === 'received' ? 'flex' : ''}">
-                                    ${message.type === 'received' ? 
-                                        `<div class="w-8 h-8 rounded-full bg-${student.color}-500 flex items-center justify-center text-white text-xs mr-2">${student.avatar}</div>` : ''}
-                                    <div>
-                                        <div class="${message.type === 'received' ? 'bg-gray-800 rounded-2xl rounded-tl-none' : 'bg-gradient-to-r from-primary to-secondary rounded-2xl rounded-tr-none'} px-4 py-2 max-w-xs md:max-w-md">
-                                            <p>${message.text}</p>
-                                        </div>
-                                        <p class="text-xs text-gray-400 mt-1 ${message.type === 'sent' ? 'text-right' : ''}">${message.time}</p>
-                                    </div>
-                                </div>
-                            `;
-                        }
-                        messagesContainer.appendChild(messageDiv);
-                    });
+                    messageDiv.innerHTML = `
+                        <div class="max-w-xs md:max-w-md rounded-lg px-4 py-2 ${message.type === 'sent' ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-200'}">
+                            <p>${message.text}</p>
+                            <p class="text-xs mt-1 ${message.type === 'sent' ? 'text-indigo-100' : 'text-gray-500'}">${message.time}</p>
+                        </div>
+                    `;
+                    messagesContainer.appendChild(messageDiv);
                 });
                 
                 // Scroll to bottom
@@ -515,170 +329,82 @@
                 // Mark messages as read
                 student.messages.forEach(msg => msg.read = true);
                 
-                // Update chat list to remove unread badge
+                // Update chat list
                 renderChatList();
-                
-                // Start typing simulation for this student if they're online
-                if (student.online) {
-                    startTypingSimulation(student);
-                } else {
-                    stopTypingSimulation(student.id);
-                }
             }
 
-            // Start typing simulation for a student
-            function startTypingSimulation(student) {
-                // Clear any existing interval for this student
-                stopTypingSimulation(student.id);
-                
-                // Only simulate if not already typing and not the active chat
-                if (activeChatId !== student.id && !student.messages.some(msg => msg.type === 'typing')) {
-                    // Set up new interval for this student
-                    typingIntervals[student.id] = setInterval(() => {
-                        simulateTyping(student);
-                    }, 10000 + Math.random() * 15000); // Every 10-25 seconds
-                }
-            }
-
-            // Stop typing simulation for a student
-            function stopTypingSimulation(studentId) {
-                if (typingIntervals[studentId]) {
-                    clearInterval(typingIntervals[studentId]);
-                    delete typingIntervals[studentId];
-                }
-            }
-
-            // Simulate typing and send message
-            function simulateTyping(student) {
-                // Only if not the active chat and not already typing
-                if (activeChatId !== student.id && !student.messages.some(msg => msg.type === 'typing')) {
-                    // Add typing indicator
-                    student.messages.push({
-                        type: "typing",
-                        time: "Just now",
-                        date: "Today"
-                    });
-                    renderChatList();
-                    
-                    // After delay, replace with actual message
-                    setTimeout(() => {
-                        // Remove typing indicator
-                        student.messages = student.messages.filter(msg => msg.type !== 'typing');
-                        
-                        // Add a new message
-                        const responses = [
-                            "I was thinking about what you said...",
-                            "That makes sense!",
-                            "Can we discuss this in our next meeting?",
-                            "I'll send you the files shortly.",
-                            "Thanks for your help!",
-                            "What time works for you?",
-                            "I have a question about the assignment.",
-                            "Could you clarify that last point?",
-                            "I've completed the task you assigned.",
-                            "When is our next session scheduled?"
-                        ];
-                        
-                        student.messages.push({
-                            type: "received",
-                            text: responses[Math.floor(Math.random() * responses.length)],
-                            time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                            date: "Today"
-                        });
-                        
-                        renderChatList();
-                    }, 1500 + Math.random() * 1500); // Typing for 1.5-3 seconds
-                }
-            }
-
-            // Send message
+            // Send Message
             function sendMessage() {
-                const text = messageInput.value.trim();
-                if (text && activeChatId) {
-                    const student = students[activeChatId];
-                    
-                    // Add sent message
-                    student.messages.push({
-                        type: "sent",
-                        text: text,
-                        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                        date: "Today",
-                        read: true
-                    });
-                    
-                    // Clear input
-                    messageInput.value = '';
-                    
-                    // Reload chat
-                    loadChat(activeChatId);
-                    
-                    // If student is online, simulate reply after delay
-                    if (student.online) {
-                        setTimeout(() => {
-                            // Only reply if still the active chat
-                            if (activeChatId === student.id) {
-                                // First show typing indicator
-                                student.messages.push({
-                                    type: "typing",
-                                    time: "Just now",
-                                    date: "Today"
-                                });
-                                loadChat(activeChatId);
+                if (!activeChatId || !messageInput.value.trim()) return;
+                
+                const student = students.find(s => s.id === activeChatId);
+                const messageText = messageInput.value.trim();
+                
+                // Add sent message
+                student.messages.push({
+                    type: "sent",
+                    text: messageText,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                });
+                
+                // Clear input
+                messageInput.value = '';
+                
+                // Reload chat
+                loadChat(activeChatId);
+                
+                // Simulate reply if online
+                if (student.online) {
+                    setTimeout(() => {
+                        if (activeChatId === student.id) { // Check if still same chat
+                            // Show typing indicator
+                            student.messages.push({
+                                type: "received",
+                                text: "...",
+                                time: "typing",
+                                isTyping: true
+                            });
+                            loadChat(activeChatId);
+                            
+                            // Send actual reply after delay
+                            setTimeout(() => {
+                                // Remove typing indicator
+                                student.messages = student.messages.filter(m => !m.isTyping);
                                 
-                                // Then after delay, send actual reply
-                                setTimeout(() => {
-                                    // Remove typing indicator
-                                    student.messages = student.messages.filter(msg => msg.type !== 'typing');
-                                    
-                                    // Add reply
-                                    const responses = [
-                                        "Thanks for your message!",
-                                        "I'll get back to you soon.",
-                                        "That's helpful, thanks!",
-                                        "Can we discuss this tomorrow?",
-                                        "I appreciate your quick response.",
-                                        "Let me check my schedule and get back to you.",
-                                        "That's an interesting point you raised.",
-                                        "I'll need to research that further.",
-                                        "Could you explain that in more detail?",
-                                        "Perfect, that works for me!"
-                                    ];
-                                    
-                                    student.messages.push({
-                                        type: "received",
-                                        text: responses[Math.floor(Math.random() * responses.length)],
-                                        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                                        date: "Today"
-                                    });
-                                    
-                                    loadChat(activeChatId);
-                                    renderChatList();
-                                }, 1500 + Math.random() * 1500); // Typing for 1.5-3 seconds
-                            }
-                        }, 500 + Math.random() * 1000); // Start reply after 0.5-1.5 seconds
-                    }
+                                // Add reply
+                                const replies = [
+                                    "Thanks for your message!",
+                                    "I'll get back to you soon.",
+                                    "That's helpful, thanks!",
+                                    "Can we discuss this tomorrow?",
+                                    "I appreciate your quick response."
+                                ];
+                                const reply = replies[Math.floor(Math.random() * replies.length)];
+                                
+                                student.messages.push({
+                                    type: "received",
+                                    text: reply,
+                                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                });
+                                
+                                loadChat(activeChatId);
+                            }, 1500 + Math.random() * 1500);
+                        }
+                    }, 500 + Math.random() * 1000);
                 }
             }
 
-            // Event listeners
-            messageInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
+            // Event Listeners
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
             });
-
-            sendBtn.addEventListener('click', sendMessage);
+            sendButton.addEventListener('click', sendMessage);
 
             // Handle window resize
             function handleResize() {
                 if (window.innerWidth >= 768) {
-                    // Desktop - ensure chat list is visible
-                    chatListPanel.classList.remove('-translate-x-full');
-                    mobileOverlay.classList.add('hidden');
-                    backButton.style.display = 'none';
-                } else {
-                    // Mobile - hide back button if no chat selected
-                    backButton.style.display = activeChatId ? 'block' : 'none';
+                    // Desktop - ensure sidebar is visible
+                    sidebar.classList.remove('-translate-x-full');
                 }
             }
 
@@ -690,28 +416,34 @@
 
             // Simulate online status changes
             setInterval(() => {
-                Object.values(students).forEach(student => {
+                students.forEach(student => {
                     if (Math.random() > 0.7) { // 30% chance to change status
                         student.online = !student.online;
                         student.lastSeen = student.online ? 'Online' : `${Math.floor(Math.random() * 24)} hours ago`;
                         
                         if (activeChatId === student.id) {
-                            currentChatStatus.className = `absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-500'} rounded-full border-2 border-gray-900`;
-                            currentChatStatusText.textContent = student.online ? 'Online' : `Last seen ${student.lastSeen}`;
-                            currentChatStatusText.className = `text-xs ${student.online ? 'text-green-400' : 'text-gray-400'}`;
+                            updateChatHeader();
                         }
-                        
-                        // Start/stop typing simulation based on online status
-                        if (student.online) {
-                            startTypingSimulation(student);
-                        } else {
-                            stopTypingSimulation(student.id);
-                        }
-                        
                         renderChatList();
                     }
                 });
-            }, 10000); // Check every 10 seconds
+            }, 10000);
+
+            function updateChatHeader() {
+                if (!activeChatId) {
+                    currentChatName.textContent = "Select a chat";
+                    currentChatAvatar.textContent = "";
+                    currentChatStatus.className = "absolute bottom-0 right-0 w-2.5 h-2.5 bg-gray-400 rounded-full border-2 border-white";
+                    currentChatStatusText.textContent = "Offline";
+                    return;
+                }
+                
+                const student = students.find(s => s.id === activeChatId);
+                currentChatName.textContent = student.name;
+                currentChatAvatar.textContent = student.avatar;
+                currentChatStatus.className = `absolute bottom-0 right-0 w-2.5 h-2.5 ${student.online ? 'bg-green-500' : 'bg-gray-400'} rounded-full border-2 border-white`;
+                currentChatStatusText.textContent = student.online ? 'Online' : `Last seen ${student.lastSeen}`;
+            }
         });
     </script>
 </body>
